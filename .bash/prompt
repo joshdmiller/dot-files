@@ -1,0 +1,76 @@
+#PROMPT_COMMAND=prompt
+#PS1='[\u@\h \W]\$ '
+#PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[0;31m\]\$ \[\e[m\]\[\e[0;32m\] '
+
+## can be shrinked
+# +-[user@machine] - [date] - [path]
+# +-[$]> 
+#PS1='\n\[\e[0;32m\]┌─[\u\[\e[0m\]@\[\e[0;36m\]\h\[\e[0m\e[0;32m\]] - [\[\e[0m\]\t \d\[\e[0;32m\]] - [\[\e[33;1m\]\w\[\e[0;32m\]]\n└─[\$]>\[\e[0m\] '
+
+## better
+# +-[ user ][ path ]
+# +-o 
+#PS1='\n\[\e[0;32m\]┌─[ \[\e[1;32m\]\u\[\e[0m\e[0;32m\] ][ \[\e[33;1m\]\w\[\e[0;32m\] ]\n\[\e[0;32m\]└─╼\[\e[0m\] '
+
+## space looking #2 w/path
+#PS1="\n\033[1;37m\]┌─[\[\e[36;1m\]\u@\[\e[32;1m\]\H\[\033[1;37m\]] \n\[\033[1;37m\]└─[\[\033[0;36m\]\w\[\033[1;37m\]]> \[\e[0m\]"
+
+#PS1='\n\[\033[0;32m\]┌┼─┼─ \[\033[0m\033[0;32m\]\u\[\033[0m\] @ \[\033[0;36m\]\h\[\033[0m\033[0;32m\] ─┤├─ \[\033[0m\]\t \d\[\033[0;32m\] ─┤├─ \[\033[0;34m\]\w\[\033[0;32m\] ─┤ \n\[\033[0;32m\]└┼─\[\033[0m\033[0;32m\]\$\[\033[0m\033[0;32m\]─┤▶\[\033[0m\] '
+
+
+# Colour Codes
+export Cyan="\[\e[m\]\[\e[0;36m\]"
+export Red="\[\e[m\]\[\e[0;31m\]"
+export White="\[\e[m\]\[\e[1;37m\]"
+export LightCyan="\[\e[m\]\[\e[1;36m\]"
+export LightRed="\[\e[m\]\[\e[1;31m\]"
+
+# Code for a cool Prompt
+function pre_prompt
+{
+    newPWD="${PWD}"
+    user="whoami"
+    host=$(echo -n $HOSTNAME | sed -e "s/[\.].*//")
+    datenow=$(date "+%a, %d %b %y")
+    let promptsize=$(echo -n "--($user@$host ddd, DD mmm YY)---(${PWD})---" \
+                 | wc -c | tr -d " ")
+
+    width=$(tput cols)
+
+    if [ `id -u` -eq 0 ]
+    then
+        let fillsize=${width}-${promptsize}+1
+    else
+        let fillsize=${width}-${promptsize}-1
+    fi
+
+    fill=""
+
+    while [ "$fillsize" -gt "0" ]
+    do
+        fill="${fill}─"
+        let fillsize=${fillsize}-1
+    done
+
+    if [ "$fillsize" -lt "0" ]
+    then
+        let cutt=3-${fillsize}
+        newPWD="...$(echo -n $PWD | sed -e "s/\(^.\{$cutt\}\)\(.*\)/\2/")"
+    fi
+}
+
+# Set prompt colour
+if [ `id -u` -eq 0 ]
+then
+    cText="${LightRed}"
+    cBorder="${Red}"
+else
+    cText="${LightCyan}"
+    cBorder="${Cyan}"
+fi
+
+PROMPT_COMMAND=pre_prompt
+
+# Display Prompt
+PS1="\n${cBorder}┌─(${White}\u@\h \$(date \"+%a, %d %b %y\")${cBorder})─\${fill}─(${cText}\$newPWD\
+${cBorder})────┐\n${cBorder}└─(${cText}\$(date \"+%H:%M\")${cBorder})─> ${White}"

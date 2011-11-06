@@ -1,0 +1,36 @@
+gap_y -1000
+ 
+background yes
+double_buffer yes 
+out_to_console yes 
+own_window yes 
+own_window_type desktop
+update_interval 1.0 
+#font -*-terminus-*-*-*-*-12-*-*-*-*-*-iso8859-*
+xftfont Terminus:size=12
+alignment mr
+ 
+TEXT
+^fg(green)^i($HOME/.xmonad/icons/net_up_02.xbm) \
+^fg(white)${upspeed eth0} \
+^fg(green)^i($HOME/.xmonad/icons/net_down_02.xbm) \
+^fg(white)${downspeed eth0} | \
+${if_up tun0}^fg(green)^i($HOME/.xmonad/icons/info_01.xbm) \
+^fg(white)VPN | $endif\
+${if_running tor}^fg(green)^i($HOME/.xmonad/icons/info_01.xbm) \
+^fg(white)TOR | $endif\
+${if_running stunnel}^fg(green)^i($HOME/.xmonad/icons/info_01.xbm) \
+^fg(white)stun | $endif\
+^fg(green)^i($HOME/.xmonad/icons/cpu.xbm) \
+^fg(white)${cpu cpu0}% \
+^fg(green)^i($HOME/.xmonad/icons/cpu.xbm) \
+^fg(white)${cpu cpu1}% \
+^fg(green)^i($HOME/.xmonad/icons/cpu.xbm) \
+^fg(white)${cpu cpu2}% \
+^fg(green)^i($HOME/.xmonad/icons/cpu.xbm) \
+^fg(white)${cpu cpu3}% | \
+^fg(green)^i($HOME/.xmonad/icons/mem.xbm) \
+^fg(white)$memperc% | \
+^fg(green)^i($HOME/.xmonad/icons/temp.xbm) \
+^fg(white)${execi 300 $HOME/.xmonad/bin/weather.sh 96003} | \
+^fg(skyblue) ^i($HOME/.xmonad/icons/clock.xbm) ${time %b %e %H:%M}

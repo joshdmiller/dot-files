@@ -1,0 +1,21 @@
+gap_y -1000
+ 
+background yes
+double_buffer yes 
+out_to_console yes 
+own_window yes 
+own_window_type desktop
+update_interval 0.5 
+#font -*-terminus-*-*-*-*-12-*-*-*-*-*-iso8859-*
+xftfont Terminus:size=12
+
+mpd_host localhost
+mpd_port 6600
+ 
+TEXT
+ \
+^fg(green)^i($HOME/.xmonad/icons/spkr_01.xbm) \
+^fg(white)${exec $HOME/.xmonad/bin/volume.sh} | \
+^fg(green)^i($HOME/.xmonad/icons/note.xbm) \
+^fg(white)${if_match "${mpd_status}" =="Playing"}$mpd_smart ($mpd_elapsed/$mpd_length) $else${mpd_status}$endif
+#^fg(white)MPD DISABLED (see ~/.xmonad/bin/conky_bar_bottom)
