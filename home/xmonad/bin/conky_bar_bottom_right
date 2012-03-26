@@ -1,0 +1,88 @@
+#!/usr/bin/conky
+# The **`home/xmonad/bin/conky_bar_bottom_right`** file contains the definition of the
+# conky information that will be piped to the dzen bar that is drawn at the
+# bottom right of the screen.
+
+# ## Configuration
+
+# The `background` variable forces conky to daemonize itself to the background
+# once it's launched.
+background yes
+
+# The `double_buffer` variable asks conky to use the Xdbe extension to reduce
+# flicker. This probably isn't required anymore.
+double_buffer yes 
+
+# `out_to_console` simply tells conky to print to stdout, which is necessary here
+# because we are piping the output to dzen.
+out_to_console yes 
+
+# `own_window` tells conky to draw its own window.
+own_window yes
+
+# `own_window_type` tells conky to draw the window in such a way as to always be
+# visible at the lowest layer (i.e. the desktop) and to not use any window
+# decorations. This option combined with the XMonad struts layout option
+# provide the appearance of a standard panel/taskbar.
+own_window_type desktop
+
+# `update_interval` is how frequently in seconds conky should re-output the content.
+update_interval 1
+
+# `font` is self-explanatory. One can use xfontsel to pick a font.
+font -*-clean-*-*-*-*-12-*-*-*-*-*-iso8859-*
+
+# `alignment` indicates the vertical and horizontal alignment of the text. `mr`
+# indicates vertically centered and horizontally right-aligned.
+alignment mr
+
+# ## Contents
+
+# The following are commented on all at once because conky does not allow
+# unprinted comments after the `TEXT` declaration.
+#
+# The `TEXT` declaration begins the contents of what actually prints to the
+# screen. Newlines are preserved, so all lines here end with a backslash to
+# draw on one line while maintaining the readability of this file.
+#
+# There are four principal sections of this configuration: network traffic, 
+# current network connection, outside temperature, and the date and time. The 
+# first section displays differently depending on whether the connection is 
+# wired (i.e. on `eht0`) or wireless (i.e. on `wlan0`). If wired, it displays 
+# "Wired |" followed by the up and down transfer rates on `eth0`, each with an 
+# accompaying icon.
+#
+# If wireless, it displays the up and down transfer rates of `wlan0` with 
+# accompanying icons followed by a pipe and the current ESSID and connection 
+# strength.
+#
+# If neither `eth0` nor `wlan0` are up, it displays simply the term "Offline".
+#
+# The next section displays a temperature icon and weather data pulled from the 
+# NOAA website. This must be changed to the codename of the meteorological 
+# station that is nearest you.
+#
+# Lastly, a clock icon and the current date and time in `DD MMMM HH:MM` format
+# is displayed.
+#
+TEXT
+${if_up eth0}\
+^fg(white)Wired | \
+^fg(green)^i($HOME/.xmonad/icons/net_up_02.xbm) \
+^fg(white)${upspeed eth0} \
+^fg(green)^i($HOME/.xmonad/icons/net_down_02.xbm) \
+^fg(white)${downspeed eth00} | \
+$endif\
+${if_up wlan0}
+^fg(green)^i($HOME/.xmonad/icons/net_up_02.xbm) \
+^fg(white)${upspeed wlan0} \
+^fg(green)^i($HOME/.xmonad/icons/net_down_02.xbm) \
+^fg(white)${downspeed wlan0} | \
+^fg(green)^i($HOME/.xmonad/icons/net-wifi.xbm) \
+^fg(white)${wireless_essid wlan0} at \
+^fg(white)${wireless_link_qual_perc wlan0}% | \
+$else ^fg(white) Offline | \
+$endif\
+^fg(green)^i($HOME/.xmonad/icons/temp.xbm) \
+^fg(white)${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KRDD temperature 30}° | \
+^fg(skyblue)^i($HOME/.xmonad/icons/clock.xbm) ${time %d %B %H:%M} 

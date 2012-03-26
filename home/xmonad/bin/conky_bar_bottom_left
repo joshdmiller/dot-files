@@ -1,0 +1,68 @@
+#!/usr/bin/conky
+# The **`home/xmonad/bin/conky_bar_bottom_left`** file contains the definition of the
+# conky information that will be piped to the dzen bar that is drawn at the
+# bottom left of the screen.
+
+# ## Configuration
+
+# The `background` variable forces conky to daemonize itself to the background
+# once it's launched.
+background yes
+
+# The `double_buffer` variable asks conky to use the Xdbe extension to reduce
+# flicker. This probably isn't required anymore.
+double_buffer yes 
+
+# `out_to_console` simply tells conky to print to stdout, which is necessary here
+# because we are piping the output to dzen.
+out_to_console yes 
+
+# `own_window` tells conky to draw its own window.
+own_window yes
+
+# `own_window_type` tells conky to draw the window in such a way as to always be
+# visible at the lowest layer (i.e. the desktop) and to not use any window
+# decorations. This option combined with the XMonad struts layout option
+# provide the appearance of a standard panel/taskbar.
+own_window_type desktop
+
+# `update_interval` is how frequently in seconds conky should re-output the content.
+update_interval 0.5 
+
+# `font` is self-explanatory. One can use xfontsel to pick a font.
+font -*-clean-*-*-*-*-12-*-*-*-*-*-iso8859-*
+
+# These two values tell conky how to connect to MPD to get information.
+mpd_host localhost
+mpd_port 6600
+
+# ## Contents
+
+# The following are commented on all at once because conky does not allow
+# unprinted comments after the `TEXT` declaration.
+#
+# The `TEXT` declaration begins the contents of what actually prints to the
+# screen. Newlines are preserved, so all lines here end with a backslash to
+# draw on one line while maintaining the readability of this file. The five
+# lines are described in more detail below:
+#
+# 1. We start with an empty space for aesthetic reasons.
+# 2. The second line sets the foreground (i.e. text) color to green and draws
+#    an icon of a speaker to the screen, followed by a space.
+# 3. The third line changes the foreground color to white and executes the
+#    [volume.sh](#/home/xmonad/bin/volume.sh) script. It ends with a pipe ("|")
+#    and a space.
+# 4. The fourth line changes the foreground color back to green and draws a
+#    music note icon followed by a space.
+# 5. Lastly, we change the foreground color to white and output some MPD status
+#    information. If mpd_status reports that MPD is playing, we print out the
+#    "smart" MPD info, which includes title and artist and the elapsed and
+#    total track lengths; otherwise, we just print the MPD status (e.g.
+#    "Stopped", "Paused", etc.).
+#
+TEXT
+ \
+^fg(green)^i($HOME/.xmonad/icons/spkr_01.xbm) \
+^fg(white)${exec $HOME/.xmonad/bin/volume.sh} | \
+^fg(green)^i($HOME/.xmonad/icons/note.xbm) \
+^fg(white)${if_match "${mpd_status}" =="Playing"}$mpd_smart ($mpd_elapsed/$mpd_length) $else${mpd_status}$endif 

@@ -1,0 +1,19 @@
+#!/bin/bash
+# The completion commands contained herein are to extend the existing bash
+# completion functions to my aliases.
+#
+# This script has been tested on [Arch Linux][arch] with Bash 4.2.24.
+#
+# [arch]: http://www.archlinux.org
+
+# ## Git 
+complete -o default -o nospace -F _git_pull gpull
+complete -o default -o nospace -F _git_push gpush
+complete -o default -o nospace -F _git_commit gc
+complete -o default -o nospace -F _git_branch gb
+complete -o default -o nospace -F _git_checkout gco
+complete -o default -o nospace -F _git_diff gdiff
+complete -o default -o nospace -F _git_log gl
+
+# ## Sudo
+complete -o default -o nospace -F _root_command s

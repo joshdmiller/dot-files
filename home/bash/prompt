@@ -1,0 +1,52 @@
+#!/bin/bash
+# **prompt** contains various Bash prompts and helper methods I have collected
+# and/or written over the years. Only one can be used at a time, obviously, so
+# only the last entry is used.
+#
+# These have been tested on [Arch Linux][arch] using Bash 2.2.24.
+#
+# [arch]: http://www.archlinux.org
+
+# ## Single-Line Prompts
+
+# This is the default Arch Linux prompt.
+#
+# ![The most basic prompt](/img/prompt_basic_001.png)
+PS1='[\u@\h \W]\$ '
+
+# This is a basic prompt with custom colors and the current working directory
+# displayed.
+#
+# ![A basic prompt with some style](/img/prompt_basic_002.png)
+PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[0;31m\]\$ \[\e[m\]\[\e[0;32m\] '
+
+# ## Multi-Line Prompts
+
+# This is a very basic two-line prompt. No new information is introduced here.
+#
+# ![A basic two-line prompt](/img/prompt_multiline_002.png)
+PS1='\n\[\e[0;32m\]┌─[ \[\e[1;32m\]\u\[\e[0m\e[0;32m\] ][ \[\e[33;1m\]\w\[\e[0;32m\] 
+\n\[\e[0;32m\]└─╼\[\e[0m\] '
+
+# This is also a basic two-line prompt. No new information is introduced here
+# either.
+#
+# ![A basic two-line prompt](/img/prompt_multiline_003.png)
+PS1="\n\033[1;37m\]┌─[\[\e[36;1m\]\u@\[\e[32;1m\]\H\[\033[1;37m\]] \n\[\033[1;37m\]└─[\[\033[0;36m\]\w\[\033[1;37m\]]> \[\e[0m\]"
+
+# This is a two-line prompt with additional relevant information.
+#
+# ![An informative two-line prompt](/img/prompt_multiline_001.png)
+PS1='\n\[\e[0;32m\]┌─[\u\[\e[0m\]@\[\e[0;36m\]\h\[\e[0m\e[0;32m\]] -\
+ [\[\e[0m\]\t \d\[\e[0;32m\]] - [\[\e[33;1m\]\w\[\e[0;32m\]]\n└─[\$]>\[\e[0m\] '
+
+# ## Current/Active Prompt
+
+# This is a two-line prompt with additional relevant information and a fun style.
+#
+# ![A fun two-line prompt](/img/prompt_multiline_004.png)
+PS1='\n\[\033[0;32m\]┌┼─┼─ \[\033[0m\033[0;32m\]\u\[\033[0m\] \
+@ \[\033[0;36m\]\h\[\033[0m\033[0;32m\] ─┤├─ \[\033[0m\]\t \d\[\033[0;32m\] ─┤\
+├─ \[\033[0;34m\]\w\[\033[0;32m\] ─┤ \n\[\033[0;32m\]└┼─\
+\[\033[0m\033[0;32m\]\$\[\033[0m\033[0;32m\]─┤▶\[\033[0m\] '
+

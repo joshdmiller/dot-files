@@ -1,0 +1,68 @@
+#!/usr/bin/conky
+# The **`home/xmonad/bin/conky_bar`** file contains the definition of the
+# conky information that will be piped to the dzen bar that is drawn at the
+# top right of the screen.
+
+# ## Configuration
+
+# The `background` variable forces conky to daemonize itself to the background
+# once it's launched.
+background yes
+
+# The `double_buffer` variable asks conky to use the Xdbe extension to reduce
+# flicker. This probably isn't required anymore.
+double_buffer yes 
+
+# `out_to_console` simply tells conky to print to stdout, which is necessary here
+# because we are piping the output to dzen.
+out_to_console yes 
+
+# `own_window` tells conky to draw its own window.
+own_window yes
+
+# `own_window_type` tells conky to draw the window in such a way as to always be
+# visible at the lowest layer (i.e. the desktop) and to not use any window
+# decorations. This option combined with the XMonad struts layout option
+# provide the appearance of a standard panel/taskbar.
+own_window_type desktop
+
+# `update_interval` is how frequently in seconds conky should re-output the content.
+update_interval 1
+
+# `font` is self-explanatory. One can use xfontsel to pick a font.
+font -*-clean-*-*-*-*-12-*-*-*-*-*-iso8859-*
+
+# `alignment` indicates the vertical and horizontal alignment of the text. `mr`
+# indicates vertically centered and horizontally right-aligned.
+alignment mr
+
+# ## Contents
+
+# The following are commented on all at once because conky does not allow
+# unprinted comments after the `TEXT` declaration.
+#
+# The `TEXT` declaration begins the contents of what actually prints to the
+# screen. Newlines are preserved, so all lines here end with a backslash to
+# draw on one line while maintaining the readability of this file.
+#
+# There are four pieces of information displayed, each separated by a pipe ("|"):
+# the CPU load, the percent of memory in use (less buffer), the current CPU 
+# temperature, and a battery percentage indicator with either a charging or
+# discharging icon.
+TEXT
+$alignr
+^fg(green)^i($HOME/.xmonad/icons/cpu.xbm) \
+^fg(white)${loadavg 1} | \
+^fg(green)^i($HOME/.xmonad/icons/mem.xbm) \
+^fg(white)$memperc% | \
+^fg(green)^i($HOME/.xmonad/icons/temp.xbm) \
+^fg(white)${execi 60 sensors -A | grep temp1 | awk '{print $2}' | sed 's/+//' | sed 's/C//'} | \
+${if_existing /proc/acpi/ac_adapter/ADP1/state off-line}\
+^fg(green)^i($HOME/.xmonad/icons/bat_empty_01.xbm) \
+^fg(white)${battery_percent BAT0}% \
+^fg(white)(${battery_time BAT0}) \
+${if_match ${battery_percent BAT0} < 20}^fg(red)LOW BATTERY$endif \
+$else\
+^fg(green)^i($HOME/.xmonad/icons/power-ac.xbm) \
+^fg(white)${battery_percent BAT0}% \
+$endif
