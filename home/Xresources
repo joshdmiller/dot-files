@@ -1,0 +1,106 @@
+! The `$HOME/.Xresources` file is the primary user-level configuration for X
+! client applications.
+
+! ## Xcursor
+
+! These variables control the cursor theme used in X11. The available themes
+! are listed in `/usr/share/icons` along with non-cursor icon themes. The size
+! is the pixel size of the cursor to use.
+Xcursor.theme           : Oxygen_Black
+Xcursor.size            : 22
+
+! ## URxt
+! URxvt (also known as rxvt-unicode) is a lightweight but extensible X11
+! terminal emulator. URxvt takes its configuration from this file as variables
+! prefixed with its name. The variables used here are but a small sampling of
+! those available, but should give the user some indication of its
+! capabilities. Each variable is explained in more detail here.
+
+! ### Basic Configuration
+
+! URxvt can be extended using Perl scripts. The default directory for scripts
+! is `/usr/lib/urxvt/perl`; since my scripts are not installed system-wide, I
+! must provide it a colon-delimited list of directories from which to read
+! scripts. See the README in that directory for details about the available
+! plugins.
+URxvt.perl-lib          : /home/joshua/Development/repos/dot-files/home/urxvt/perl
+
+! The following variables hold aesthetic information about URxvt. Background
+! and foreground are obvious. The font must be an XOrg font string, which can
+! be selected graphically using the `xfontsel` tool. `scrollBar` indicates
+! whether a scroll bar will be visible; other options include `left` and
+! `right`.
+URxvt.background        : black
+URxvt.foreground        : white
+URxvt.font              : -*-clean-*-*-*-*-12-*-*-*-*-*-iso8859-*
+URxvt.scrollBar         : off
+
+! URxvt by default does not support using the control+arrows to advance or
+! retreat one word at a time. The following two codes re-enable this.
+URxvt.keysym.C-Right    : \033[1;5C
+URxvt.keysym.C-Left     : \033[1;5D
+
+! ### Plugins
+
+! One can extend URxvt using perl. The `perl-ext` and `perl-ext-common`
+! variables list the plugins that should be loaded. These must exist in either
+! the default path or one of the `perl-lib` paths defined above.
+!
+! * default - the Perl modules URxvt enables by default.
+! * tabbedex - an improved version of the included `tabbed` created by stepb;
+!   this plugin allows multiple tabs within the same window with the ability to
+!   reorder and rename.
+! * url-select - an improved version of the included plugin of the same name,
+!   which allows using the keyboad to select and copy URLs printed to the
+!   terminal.
+! * clipboard - an extension for improved management of the clipboard,
+!   including the use multiple buffers.
+!
+! There are two variables here because `perl-ext-common` is supposed to apply
+! to all instances, whereas `perl-ext` would only apply to some instances. In
+! most use cases, you will want to follow the pattern I use here, which is to
+! place all custom plugins in `perl-ext-common`.
+URxvt.perl-ext-common   : default,tabbedex,url-select,clipboard
+URxvt.perl-ext          : default
+
+! Here I specify some basic options for the `url-select` plugin. The
+! `urlLauncher` is the application with which launched URLs will open.
+! `underlineURLs` indicates that URLs should be visually identified by
+! underlining them, similar to a web browser. Lastly, `urlButton` is the mouse
+! button to use to launch URLs on click. I use the middle mouse button.
+URxvt.urlLauncher       : firefox
+URxvt.underlineURLs     : true
+URxvt.urlButton         : 2
+
+! The below commands are what the `clipboard` plugin will use to copy and
+! paste. These are the default values that I listed for reference purposes.
+! They use the `clipboard` buffer rather than the default use of the `primary`
+! buffer, which will not work in other GUI applications as expected.
+URxvt.copyCommand       : xsel -ibp
+URxvt.pasteCommand      : xsel -obp
+
+! ### Keybindings
+!
+! URxvt stores keybindings in a variable called `keysym`. The pattern for any
+! keybinding is "modifier+hyphen+key". On most systems, the modifier C is
+! Control, S is Shift, and M is Alt. The value assigned to the keybinding is
+! the function to execute. My keybindings all point to perl extensions, so the
+! format is `perl:<module>:function`.
+
+! The default keybindings for moving tabs with `tabbedex` are C-Left and
+! C-Right, but I re-assigned those earlier to advance and withdraw one word at
+! a time. Here, I remap the tab move keybindings to Control-Shift-Left and
+! Control-Shift-Right.
+URxvt.keysym.M-S-Left   : perl:tabbedex:move_tab_left
+URxvt.keysym.M-S-Right  : perl:tabbedex:move_tab_right
+
+! As the C+S+v and C+S+c are already used by URxvt for internal functions, I
+! mapped copy and paste to Alt+c and Alt+v.
+URxvt.keysym.M-c        : perl:clipboard:copy
+URxvt.keysym.M-v        : perl:clipboard:paste
+URxvt.keysym.M-C-v      : perl:clipboard:paste_escaped
+
+! The keybinding to activate the default `url-select` plugin is Alt+u, so I map
+! the same keybinding to the replacement.
+URxvt.keysym.M-u        : perl:url-select:select_next
+
