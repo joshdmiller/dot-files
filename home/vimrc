@@ -1,0 +1,122 @@
+" The `$HOME/.vimrc` file is the primary user-specific configuration file for
+" the [Vim](http://www.vim.org/) advanced text editor. Vim is by far my
+" favorite text editor. When I program, I use Vim. When I
+" edit configuration files, I use Vim. When I blog, I use Vim. Even when I
+" browse the web, I use Vim (actually I use
+" [Vimperator](http://www.vimperator.org), a Firefox plugin that adds command
+" mode and Vim-like keybindings).
+"
+" This file is the entry point to my entire Vim configuration, including both
+" the console-based Vim and the graphical GVim. Each option is discussed as
+" it is set.
+
+" ## Basic Options
+
+" The majority of the time I run Vim, there is something with a defined
+" syntax, from this very file to Go source code to CoffeeScript files to
+" stylesheets. The following option enables syntax highlighting that filetype
+" plugins utilize.
+syntax on
+
+" No matter what I am editing, I like to see line numbers to the left.
+set number
+
+" As a matter of best practice, I try to keep all lines in files from
+" exceeding 80 characters so there are no wrapping issues when viewed
+" anywhere. The following command will create a vertical line at 80
+" characters. In most of my color themes, it will show as red.
+set colorcolumn=80
+
+" I want the status line that appears at the bottom of the screen to be
+" visible by default, rather than only under certain conditions.
+set laststatus=2
+
+" I like to see the line on which the cursor sits to be highlighted so it is
+" easier to locate.
+set cursorline
+
+" The `smartindent` option has Vim use intelligent rules to determine when and
+" how much to indent. This is very handy when editing code or bulleted lists.
+set smartindent
+
+" As a general rule, I prefer spaces instead of tabs. The following options
+" expand tab keypresses to four spaces. I also set tabs to present themselves
+" as four spaces for those files that require tabs (like a Makefile).
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+
+" There some Vi compatibilities that I don't like, so I get rid of them. 
+set nocompatible
+
+" I very much like the `Clean` monospaced/fixed-width font. This sets it as
+" the default when using GVim.
+set guifont=Clean
+
+" I like to have a darker color scheme when running GVim. Of the built-in
+" schemes, I tend to like Koehler.
+colorscheme koehler
+
+" I prefer not to keep file history in the menus of GVim.
+let g:bmenu_max_pathlen=0
+
+" ## Plugins
+
+" The following asks Vim to autodetect the type of file I have open and load
+" its plugin. The `filetype indent` option also asks Vim to load the
+" filetype's indent plugin if it exists. This is a must if you expand tabs to
+" spaces and edit Makefiles, as I do.
+filetype plugin on
+filetype indent on
+
+" Adding and deleting Vim scripts can be tough to manage. If you code in, say,
+" C, you have files for syntax, a filetype detection, plugin features, and
+" more - and all of these files are stored in separate directories along with
+" like files from all of your other plugins. If you want to remove a plugin,
+" you must search all of these directories and delete them manually. What a
+" mess. Instead, I love the [Pathogen](https://github.com/tpope/vim-pathogen) 
+" package management system. It allows you to keep all of your plugins in
+" their own directories, so adding and deleting is a breeze. 
+
+" To load it, I first add Pathogen's autoload to the runtime and then I call
+" `Pathogen#infect` to load all my plugins, passing it the folder inside
+" `$HOME/.vim/` where they are stored. See the
+" [README](#/home/vim/README.markdown) inside the `packages` directory for
+" information on my plugins.
+runtime pathogen/autoload/pathogen.vim
+call pathogen#infect('packages')
+
+" One of the plugins I use is [NERDTree](https://github.com/scrooloose/nerdtree), 
+" a file tree explorer. If I launch Vim without specifying any file, I want it
+" to open NERDTree.
+"
+" Also, I do not need all files to appear, so I tell NERDTree to ignore
+" certain types of files.
+autocmd GuiEnter * if !argc() | edit `pwd` | endif
+let NERDTreeIgnore=[ '\.o$', '\.swp$', '\~$', '\.class$' ]
+
+" For some reason, YAML files do not have filetype detection, so we add it
+" here simply based on the file extension.
+au BufNewFile,BufRead *.yaml,*.yml setfiletype yaml
+
+" For the LessCSS plugin, I have a convenience keybinding to run the lessc
+" command and to pipe the contents to the file with the same name but with the
+" extension `css` rather than `less`.
+nnoremap ,m :w <BAR> !lessc % > %:t:r.css<CR><space>
+
+" ## Custom Key Mappings
+
+" Here are a few keybindings I've included for convenience. The first two map
+" `Control+s` to write out the current buffer and continue where I left off. The
+" third maps `Control+p` to put the contents of Vim's clipboard buffer to after
+" the cursor.
+imap <C-s> <ESC>:w<CR>a
+nmap <C-s> <ESC>:w<CR>
+imap <C-p> <ESC>p<CR>a
+
+" When I use Vim for blogging or other writing, I like to enable auto-wrapping
+" at 80 characters as well as enable spell checking. To be able to switch back
+" and forth, I have mapped `F7` and `F9` to enable and disable, respectively.
+map <F7> :set spell<CR>:set spellsuggest=10<CR>:set textwidth=80<CR>:set wm=2<CR>
+map <F9> :set nospell<CR>:set textwidth=0<CR>
+

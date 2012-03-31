@@ -1,0 +1,39 @@
+[submodule "home/vim/packages/powerline"]
+	path = home/vim/packages/powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "home/vim/packages/nerdtree"]
+	path = home/vim/packages/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "home/vim/packages/less"]
+	path = home/vim/packages/less
+	url = https://github.com/groenewege/vim-less.git
+[submodule "home/vim/packages/css3-syntax"]
+	path = home/vim/packages/css3-syntax
+	url = https://github.com/hail2u/vim-css3-syntax.git
+[submodule "home/vim/packages/css-color"]
+	path = home/vim/packages/css-color
+	url = https://github.com/skammer/vim-css-color.git
+[submodule "home/vim/packages/coffee-script"]
+	path = home/vim/packages/coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "home/vim/pathogen"]
+	path = home/vim/pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule "home/vim/packages/smartinput"]
+	path = home/vim/packages/smartinput
+	url = https://github.com/kana/vim-smartinput.git
+[submodule "home/vim/packages/fugitive"]
+	path = home/vim/packages/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "home/vim/packages/snipmate"]
+	path = home/vim/packages/snipmate
+	url = https://github.com/garbas/vim-snipmate.git
+[submodule "home/vim/packages/snipmate-snippets"]
+	path = home/vim/packages/snipmate-snippets
+	url = https://github.com/honza/snipmate-snippets.git
+[submodule "home/vim/packages/addon-mw-utils"]
+	path = home/vim/packages/addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "home/vim/packages/tlib"]
+	path = home/vim/packages/tlib
+	url = https://github.com/tomtom/tlib_vim.git
