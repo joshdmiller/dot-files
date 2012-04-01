@@ -19,21 +19,18 @@ The below tree is an overview of what's contained in this respository or
 configuration information. In each directory of this repository is a `README`
 file providing more information.
 
-```
-home/                   - my `$HOME` directory (e.g. `/home/joshua`)
-  |-- bash/             - various bash configuration files and helpers
-  |-- urxvt/            - urxvt configuration files
-  |   |-- perl/         - perl extensions for urxvt
-  |-- vim/              - Vim configuration files
-  |   |-- packages/     - Vim plugins as submodules
-  |   |-- pathogen/     - Pathogen package management system for Vim as a submodule
-  |-- xmonad/           - xmonad configuration files
-  |   |-- bin/          - conky configurations and helper scripts for xmonad
-  |   |-- icons/        - icons for use with conky inside xmonad
-  |   |-- xmonad.hs     - the primary xmonad configuration file
-  |-- bashrc            - the primary Bash configuration script
-  |-- Xresources        - the primary Bash configuration script
-  |-- vimrc             - the primary Bash configuration script
-      
-```
+    home/                   - my `$HOME` directory (e.g. `/home/joshua`)
+      |-- bash/             - various bash configuration files and helpers
+      |-- urxvt/            - urxvt configuration files
+      |   |-- perl/         - perl extensions for urxvt
+      |-- vim/              - Vim configuration files
+      |   |-- packages/     - Vim plugins as submodules
+      |   |-- pathogen/     - Pathogen package management system for Vim as a submodule
+      |-- xmonad/           - xmonad configuration files
+      |   |-- bin/          - conky configurations and helper scripts for xmonad
+      |   |-- icons/        - icons for use with conky inside xmonad
+      |   |-- xmonad.hs     - the primary xmonad configuration file
+      |-- bashrc            - the primary Bash configuration script
+      |-- Xresources        - the primary Bash configuration script
+      |-- vimrc             - the primary Bash configuration script
 
