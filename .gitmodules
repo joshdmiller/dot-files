@@ -37,3 +37,15 @@
 [submodule "home/vim/packages/tlib"]
 	path = home/vim/packages/tlib
 	url = https://github.com/tomtom/tlib_vim.git
+[submodule "home/vim/packages/vividchalk"]
+	path = home/vim/packages/vividchalk
+	url = https://github.com/tpope/vim-vividchalk
+[submodule "home/vim/packages/ctrlp"]
+	path = home/vim/packages/ctrlp
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "home/vim/packages/latex-suite"]
+	path = home/vim/packages/latex-suite
+	url = git@github.com:joshdmiller/vim-latex
+[submodule "home/vim/packages/tagbar"]
+	path = home/vim/packages/tagbar
+	url = https://github.com/majutsushi/tagbar.git
