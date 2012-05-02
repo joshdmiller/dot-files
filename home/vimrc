@@ -53,14 +53,12 @@ set nocompatible
 " the default when using GVim.
 set guifont=Clean
 
-" I like to have a darker color scheme when running GVim. Of the built-in
-" schemes, I tend to like Koehler.
-colorscheme koehler
-
 " I prefer not to keep file history in the menus of GVim.
 let g:bmenu_max_pathlen=0
 
-" ## Plugins
+" This tells Vim to automatically change the global current working directory
+" to the directory of the file currently being edited.
+set autochdir
 
 " The following asks Vim to autodetect the type of file I have open and load
 " its plugin. The `filetype indent` option also asks Vim to load the
@@ -68,6 +66,19 @@ let g:bmenu_max_pathlen=0
 " spaces and edit Makefiles, as I do.
 filetype plugin on
 filetype indent on
+
+" Further, when working with source code, we ask Vim to support
+" OmniCompletion, which uses smarter algorithms to look at the text prior to
+" the cursor to try to guess what you want to type next.
+set ofu=syntaxcomplete#Complete
+
+" For the completion menu, we want on invokation for Vim to insert the longest
+" sequence of letters common to all completions, just like in an IDE like
+" Eclipse or NetBeans. Further, we want the menu to show even if there was
+" only a single match.
+set completeopt=longest,menuone
+
+" ## Plugins
 
 " Adding and deleting Vim scripts can be tough to manage. If you code in, say,
 " C, you have files for syntax, a filetype detection, plugin features, and
@@ -86,6 +97,11 @@ filetype indent on
 runtime pathogen/autoload/pathogen.vim
 call pathogen#infect('packages')
 
+" I like to have a darker color scheme when running GVim. Of the built-in
+" schemes, I tend to like moria, which is one of the plugins loaded by
+" Pathogen.
+colorscheme moria
+
 " One of the plugins I use is [NERDTree](https://github.com/scrooloose/nerdtree), 
 " a file tree explorer. If I launch Vim without specifying any file, I want it
 " to open NERDTree.
@@ -99,10 +115,12 @@ let NERDTreeIgnore=[ '\.o$', '\.swp$', '\~$', '\.class$' ]
 " here simply based on the file extension.
 au BufNewFile,BufRead *.yaml,*.yml setfiletype yaml
 
-" For the LessCSS plugin, I have a convenience keybinding to run the lessc
-" command and to pipe the contents to the file with the same name but with the
-" extension `css` rather than `less`.
-nnoremap ,m :w <BAR> !lessc % > %:t:r.css<CR><space>
+" The latex-suite plugin likes some things to be a certain way.
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
+
+" For the CtrlP plugin, I want to ignore any files matching these patterns:
+set wildignore+=*/tmp/*,*.so,*.sw*,*.zip,*.tar.*,*.tar,.git/*,*/dojo/*,*/dijit/*,*/dojox/*
 
 " ## Custom Key Mappings
 
@@ -119,4 +137,43 @@ imap <C-p> <ESC>p<CR>a
 " and forth, I have mapped `F7` and `F9` to enable and disable, respectively.
 map <F7> :set spell<CR>:set spellsuggest=10<CR>:set textwidth=80<CR>:set wm=2<CR>
 map <F9> :set nospell<CR>:set textwidth=0<CR>
+
+" For the LessCSS plugin, I have a convenience keybinding to run the lessc
+" command and to pipe the contents to the file with the same name but with the
+" extension `css` rather than `less`.
+nnoremap <leader>lc :w <BAR> !lessc % > %:t:r.css<CR><space>
+
+" It can be bloody annoying to hit the `enter` key on a completion menu and
+" have it not only not complete the selected entry, but kick me onto a new
+" line. This changes the behavior of the `enter` key so that it will just
+" activate the completion.
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" `Ctrl-n` will continue to function as it should, but continuing to type will
+" also narrow the selection, moving the highlighted entry to the next logical
+" match.
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" Open the omni completion menu, closing the previous one if open, and opening
+" a new menu without changing the text:
+inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+
+" Open the user completion menu, closing the previous one if open, and opening
+" a new menu without changing the text.
+inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+
+" Now I map a keybinding for CoffeeScript files to run the `coffeelint`
+" command on the current file on `\cl` and `:CoffeeMake` on the current file
+" on `\cc`.
+map <leader>cl :CoffeeLint! <CR>| cwindow
+map <leader>cc :CoffeeMake --bare <CR>| cwindow
+
+" And a little shortcut for obtaining word count:
+map <leader>wc :!wc -w %<CR>
+
+" Active the Tagbar plugin with `<F8>`.
+map <F8> :TagbarToggle<CR>
 

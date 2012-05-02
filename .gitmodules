@@ -49,3 +49,6 @@
 [submodule "home/vim/packages/tagbar"]
 	path = home/vim/packages/tagbar
 	url = https://github.com/majutsushi/tagbar.git
+[submodule "home/vim/packages/markdown"]
+	path = home/vim/packages/markdown
+	url = git@github.com:joshdmiller/vim-markdown.git
