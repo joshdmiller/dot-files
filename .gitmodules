@@ -52,3 +52,6 @@
 [submodule "home/vim/packages/markdown"]
 	path = home/vim/packages/markdown
 	url = git@github.com:joshdmiller/vim-markdown.git
+[submodule "home/vim/packages/liquid"]
+	path = home/vim/packages/liquid
+	url = https://github.com/tpope/vim-liquid.git
