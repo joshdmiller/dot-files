@@ -166,14 +166,21 @@ alias reload="source $HOME/.bashrc"
 # ## Package Management
 
 # I use [Arch Linux][arch], so Pacman is my package manager. These are just
-# shortcuts.
-alias pi='sudo pacman-color -S --needed'    # install specified package if its not installed
-alias pd='sudo pacman-color -Sy'            # refresh repositories
-alias pu='sudo pacman-color -Syu'           # update system
-alias pf='sudo pacman-color -Ss'            # search the repos
-alias pl='sudo pacman-color -U'             # install a local pkg.txz file
-alias pq='sudo pacman-color -Qs'            # search installed packages
-alias pr='sudo pacman-color -Rdns'          # uninstall +deps +configs
+# shortcuts. However, I only want to use `pacman-color` if it is installed, so
+# I do a quick check first.
+if [ -f /usr/bin/pacman-color ]; then 
+    JOSH_PM_CMD="sudo pacman-color"
+else
+    JOSH_PM_CMD="sudo pacman"
+fi
+
+alias pi="$JOSH_PM_CMD -S --needed $@"    # install specified package if its not installed
+alias pd="$JOSH_PM_CMD -Sy $@"            # refresh repositories
+alias pu="$JOSH_PM_CMD -Syu $@"           # update system
+alias pf="$JOSH_PM_CMD -Ss $@"            # search the repos
+alias pl="$JOSH_PM_CMD -U $@"             # install a local pkg.txz file
+alias pq="$JOSH_PM_CMD -Qs $@"            # search installed packages
+alias pr="$JOSH_PM_CMD -Rdns $@"          # uninstall +deps +configs
 
 # For accessing the [Arch User Repository][aur] (i.e. unsupported packages and
 # ports), I like Yaourt, which wraps Pacman with additional functionality for
