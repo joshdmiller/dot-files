@@ -99,7 +99,7 @@ username = "joshua"
 -- This is the sound control to pass to amixer when changing volume. This can
 -- be Front Master, Master, and others depending on your sound card. Use
 -- alsamixer to find which one you should use.
-userAmixerControl = "Front Master"
+userAmixerControl = "Master"
 
 -- The command used to lock the screen, e.g. gnome-screensaver, xscreensaver,
 -- slock, etc.
@@ -154,7 +154,7 @@ isVisible = do
 -- This is an Xorg font string. You can pick one using the graphical xfontsel
 -- tool. Make sure the font is installed or there will be errors and your
 -- XMonad will not look right.
-userFont = "-*-clean-*-*-*-*-12-*-*-*-*-*-iso8859-*"
+userFont = "-*-terminus-*-*-*-*-12-*-*-*-*-*-iso8859-*"
 
 -- This is the height used for all the dzen bars and the Prompt.
 userBarHeight = "16"
@@ -237,7 +237,8 @@ myXPConfig = defaultXPConfig {
   bgColor = myBgColor,
   fgColor = myFgColor,
   fgHLight = myHighlightedFgColor,
-  bgHLight = myHighlightedBgColor
+  bgHLight = myHighlightedBgColor,
+  font = userFont
   }
 
 -- ## Workspace Info Bar (Top Left)
@@ -610,6 +611,7 @@ main = do
    wallpaper <- spawnPipe userWallpaperCommand
    numlock <- spawnPipe "numlockx"
    xsetroot <- spawnPipe "xsetroot -cursor_name left_ptr"
+   xrdb <- spawnPipe "xrdb ~/.Xresources"           -- rxvt-unicode settings
    urxtd <- spawnPipe "urxvtd"                     -- rxvt-unicode daemon
    xmonad $ myUrgencyHook $ defaultConfig          -- run xmonad
       { terminal = userTerminalCommand

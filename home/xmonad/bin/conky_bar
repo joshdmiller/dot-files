@@ -11,11 +11,12 @@ background yes
 
 # The `double_buffer` variable asks conky to use the Xdbe extension to reduce
 # flicker. This probably isn't required anymore.
-double_buffer yes 
+double_buffer yes
 
 # `out_to_console` simply tells conky to print to stdout, which is necessary here
 # because we are piping the output to dzen.
-out_to_console yes 
+out_to_console yes
+out_to_x no
 
 # `own_window` tells conky to draw its own window.
 own_window yes
@@ -57,7 +58,7 @@ $alignr
 ^fg(white)$memperc% | \
 ^fg(green)^i($HOME/.xmonad/icons/temp.xbm) \
 ^fg(white)${execi 60 sensors -A | grep temp1 | awk '{print $2}' | sed 's/+//' | sed 's/C//'} | \
-${if_existing /proc/acpi/ac_adapter/ADP1/state off-line}\
+^fg(white)${if_match "${exec acpi | awk '{print $3}' | sed 's/,//'}" == "Discharging"}\
 ^fg(green)^i($HOME/.xmonad/icons/bat_empty_01.xbm) \
 ^fg(white)${battery_percent BAT0}% \
 ^fg(white)(${battery_time BAT0}) \

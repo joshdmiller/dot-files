@@ -165,24 +165,38 @@ alias reload="source $HOME/.bashrc"
 
 # ## Package Management
 
-# I use [Arch Linux][arch], so Pacman is my package manager. These are just
-# shortcuts.
-alias pi='sudo pacman-color -S --needed'    # install specified package if its not installed
-alias pd='sudo pacman-color -Sy'            # refresh repositories
-alias pu='sudo pacman-color -Syu'           # update system
-alias pf='sudo pacman-color -Ss'            # search the repos
-alias pl='sudo pacman-color -U'             # install a local pkg.txz file
-alias pq='sudo pacman-color -Qs'            # search installed packages
-alias pr='sudo pacman-color -Rdns'          # uninstall +deps +configs
+# I switch between distributions frequently, so it is helpful to have aliases
+# that do not conflict (for example yi meaning either yaourt or yum). This
+# section enables aliases based on the existence of the binary.
+
+# In [Arch Linux][arch], Pacman is the package manager.
+if [ -f /usr/bin/pacman ]; then
+    alias pi='sudo pacman-color -S --needed'    # install specified package if its not installed
+    alias pd='sudo pacman-color -Sy'            # refresh repositories
+    alias pu='sudo pacman-color -Syu'           # update system
+    alias pf='sudo pacman-color -Ss'            # search the repos
+    alias pl='sudo pacman-color -U'             # install a local pkg.txz file
+    alias pq='sudo pacman-color -Qs'            # search installed packages
+    alias pr='sudo pacman-color -Rdns'          # uninstall +deps +configs
+fi
 
 # For accessing the [Arch User Repository][aur] (i.e. unsupported packages and
 # ports), I like Yaourt, which wraps Pacman with additional functionality for
 # the AUR. Just shortcuts here too.
 #
 # [aur]: http://aur.archlinux.org
-alias yi='yaourt -S --needed'               # install and/or build specified package if its not installed
-alias yf='yaourt -Ss'                       # search the Pacman repos and the AUR
-alias yg='yaourt -Gs'                       # download a build script from the AUR
+if [ -f /usr/bin/yaourt ]; then
+    alias yi='yaourt -S --needed'               # install and/or build specified package if its not installed
+    alias yf='yaourt -Ss'                       # search the Pacman repos and the AUR
+    alias yg='yaourt -Gs'                       # download a build script from the AUR
+fi
+
+if [ -f /usr/bin/yum ]; then
+    alias yi="sudo yum install"
+    alias yf="sudo yum search"
+    alias yr="sudo yum remove"
+    alias yu="sudo yum update"
+fi
 
 # ## Git
 

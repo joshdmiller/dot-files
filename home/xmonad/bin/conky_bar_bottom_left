@@ -11,11 +11,12 @@ background yes
 
 # The `double_buffer` variable asks conky to use the Xdbe extension to reduce
 # flicker. This probably isn't required anymore.
-double_buffer yes 
+double_buffer yes
 
 # `out_to_console` simply tells conky to print to stdout, which is necessary here
 # because we are piping the output to dzen.
-out_to_console yes 
+out_to_console yes
+out_to_x no
 
 # `own_window` tells conky to draw its own window.
 own_window yes

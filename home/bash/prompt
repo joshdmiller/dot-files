@@ -22,17 +22,17 @@ PS1='\[\e[0;31m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[0;31m\]\$ \[\e[m\]\[\e[0
 
 # ## Multi-Line Prompts
 
-# This is a very basic two-line prompt. No new information is introduced here.
-#
-# ![A basic two-line prompt](/img/prompt_multiline_002.png)
-PS1='\n\[\e[0;32m\]┌─[ \[\e[1;32m\]\u\[\e[0m\e[0;32m\] ][ \[\e[33;1m\]\w\[\e[0;32m\] 
-\n\[\e[0;32m\]└─╼\[\e[0m\] '
-
 # This is also a basic two-line prompt. No new information is introduced here
 # either.
 #
 # ![A basic two-line prompt](/img/prompt_multiline_003.png)
 PS1="\n\033[1;37m\]┌─[\[\e[36;1m\]\u@\[\e[32;1m\]\H\[\033[1;37m\]] \n\[\033[1;37m\]└─[\[\033[0;36m\]\w\[\033[1;37m\]]> \[\e[0m\]"
+
+# This is a very basic two-line prompt. No new information is introduced here.
+#
+# ![A basic two-line prompt](/img/prompt_multiline_002.png)
+PS1='\n\[\e[0;32m\]┌─[ \[\e[1;32m\]\u\[\e[0m\e[0;32m\] ][ \[\e[33;1m\]\w\[\e[0;32m\] 
+\n\[\e[0;32m\]└─╼\[\e[0m\] '
 
 # This is a two-line prompt with additional relevant information.
 #
