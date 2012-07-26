@@ -51,7 +51,7 @@ set nocompatible
 
 " I very much like the `Clean` monospaced/fixed-width font. This sets it as
 " the default when using GVim.
-set guifont=Clean
+set guifont=Terminus
 
 " I prefer not to keep file history in the menus of GVim.
 let g:bmenu_max_pathlen=0

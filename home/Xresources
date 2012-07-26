@@ -32,7 +32,7 @@ URxvt.perl-lib          : /home/joshua/Development/repos/dot-files/home/urxvt/pe
 ! `right`.
 URxvt.background        : black
 URxvt.foreground        : white
-URxvt.font              : -*-clean-*-*-*-*-12-*-*-*-*-*-iso8859-*
+URxvt.font              : -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
 URxvt.scrollBar         : off
 
 ! URxvt by default does not support using the control+arrows to advance or
@@ -93,6 +93,10 @@ URxvt.pasteCommand      : xsel -obp
 ! Control-Shift-Right.
 URxvt.keysym.M-S-Left   : perl:tabbedex:move_tab_left
 URxvt.keysym.M-S-Right  : perl:tabbedex:move_tab_right
+
+! I have mapped C-Down to create a new tab and C-Up to rename the current tab.
+URxvt.keysym.S-Down  : perl:tabbedex:new_tab
+URxvt.keysym.S-Up  : perl:tabbedex:rename_tab
 
 ! As the C+S+v and C+S+c are already used by URxvt for internal functions, I
 ! mapped copy and paste to Alt+c and Alt+v.
