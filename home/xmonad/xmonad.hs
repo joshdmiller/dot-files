@@ -90,8 +90,28 @@ import XMonad.Hooks.SetWMName
 -- overflow.
 --
 -- **TODO:** Use X11 libraries to generate these based on your screen resolution.
-userScreenWidth  = "1366"
-userScreenHeight = "768"
+userScreenWidth  = "1680"
+userScreenHeight = "1050"
+
+-- The following are some width settings based on your defined screen height
+-- and width. They are probably fine. but if you have a very large or very
+-- small screen, you may need to adjust these.
+workspacesWidth = "800"
+
+-- For convenience, some of the above need to be converted by type or
+-- calculated.
+workspacesWidthInt = read workspacesWidth :: Int
+userScreenWidthInt = read userScreenWidth :: Int
+userScreenHeightInt = read userScreenHeight :: Int
+userBarHeightInt = read userBarHeight :: Int
+
+conkyBLX = 0
+conkyBLY = userScreenHeightInt - userBarHeightInt
+conkyBLW = quot userScreenWidthInt 2
+
+conkyBRX = quot userScreenWidthInt 2
+conkyBRY = userScreenHeightInt - userBarHeightInt
+conkyBRW = quot userScreenWidthInt 2
 
 -- This is the username of the person employing this configuration.
 username = "joshua"
@@ -99,11 +119,11 @@ username = "joshua"
 -- This is the sound control to pass to amixer when changing volume. This can
 -- be Front Master, Master, and others depending on your sound card. Use
 -- alsamixer to find which one you should use.
-userAmixerControl = "Master"
+userAmixerControl = "Front Master"
 
 -- The command used to lock the screen, e.g. gnome-screensaver, xscreensaver,
 -- slock, etc.
-userScreenlockCommand = "/usr/bin/xscreensaver-command -lock"
+userScreenlockCommand = "/usr/bin/slock"
 
 -- This variable holds the user's preferred terminal, e.g. gnome-terminal,
 -- urxvt, xterm, lxterm, lilyterm, konsole, etc.
@@ -286,7 +306,7 @@ myDzenPP h = defaultPP {
     wrapBitmap bitmap = "^p(5)^i(" ++ userImagePath ++ bitmap ++ ")^p(5)"
 
 -- This is the dzen command used to load the workspaces list.
-myStatusBar      = "dzen2 -w 800  -ta l " ++ myDzenGenOpts
+myStatusBar      = "dzen2 -w " ++ workspacesWidth ++ "  -ta l " ++ myDzenGenOpts
 
 -- ## An Urgency Bar
 
@@ -311,19 +331,19 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
 
 -- This conky bar shows the current CPU load, RAM usage, core temperature, and
 -- battery percentage.
-myConkyBar       = "conky -a mr -c ~/.xmonad/bin/conky_bar | dzen2 -x 800 -w 566 -ta r " ++ myDzenGenOpts
+myConkyBar       = "conky -a mr -c ~/.xmonad/bin/conky_bar | dzen2 -x " ++ workspacesWidth ++ " -w " ++ (show (userScreenWidthInt - workspacesWidthInt)) ++ " -ta r " ++ myDzenGenOpts
 
 -- ## The Bottom Right Bar
 
 -- This conky bar shows the current up and down network transfer rates, the
 -- currently-connected WIFI access point, the temperature outside, and the date
 -- and time.
-myConkyBarBottomR = "conky -c ~/.xmonad/bin/conky_bar_bottom_right | dzen2 -y 752 -x 683 -w 683 -ta r " ++ myDzenGenOpts
+myConkyBarBottomR = "conky -c ~/.xmonad/bin/conky_bar_bottom_right | dzen2 -y " ++ (show conkyBRY) ++ " -x " ++ (show conkyBRX) ++ " -w " ++ (show conkyBRW) ++ " -ta r " ++ myDzenGenOpts
 
 -- ## The Bottom Left Bar
 
 -- This conky bar shows the volume, MPD status, and currently-playing track.
-myConkyBarBottomL = "conky -c ~/.xmonad/bin/conky_bar_bottom_left | dzen2 -y 752 -x 0 -w 683 -ta l " ++ myDzenGenOpts
+myConkyBarBottomL = "conky -c ~/.xmonad/bin/conky_bar_bottom_left | dzen2 -y " ++ (show conkyBLY) ++ " -x " ++ (show conkyBLX) ++ " -w " ++ (show conkyBLW) ++ " -ta l " ++ myDzenGenOpts
 
 -- # LAYOUT DEFINITIONS
 --
@@ -377,10 +397,10 @@ myWorkspaces = [
   supWsNum "1" "web" "fox.xbm",
   supWsNum "2" "dev" "arch_10x10.xbm",
   supWsNum "3" "term" "arch.xbm",
-  supWsNum "4" "writing" "diskette.xbm",
-  supWsNum "5" "music" "note.xbm",
-  supWsNum "6" "media" "play.xbm",
-  supWsNum "7" "man" "info_03.xbm",
+  supWsNum "4" "media" "play.xbm",
+  supWsNum "5" "man" "info_03.xbm",
+  supWsNum "6" "enc" "shroom.xbm",
+  supWsNum "7" "misc" "empty.xbm",
   supWsNum "8" "misc" "empty.xbm",
   supWsNum "9" "min" "pause.xbm"
   ]
@@ -444,9 +464,7 @@ myManageHook = composeAll
         className                =? "Gimp"           --> doFloat 
     ,   className                =? "mplayer"        --> doFloat
     ,   className                =? "Truecrypt"      --> doFloat
-    ,   className                =? "Mirage"         --> doFloat
-    ,   className                =? "Ristretto"      --> doFloat
-    ,   className                =? "Viewnior"       --> doFloat
+    ,   className                =? "sxiv"           --> doFloat
     ,   className                =? "File-roller"    --> doFloat
     ,   stringProperty "WM_NAME" =? "Copying files"  --> doFloat
     ]
@@ -611,7 +629,7 @@ main = do
    wallpaper <- spawnPipe userWallpaperCommand
    numlock <- spawnPipe "numlockx"
    xsetroot <- spawnPipe "xsetroot -cursor_name left_ptr"
-   xrdb <- spawnPipe "xrdb ~/.Xresources"           -- rxvt-unicode settings
+   xrdb <- spawnPipe "xrdb ~/.Xresources"          -- rxvt-unicode settings
    urxtd <- spawnPipe "urxvtd"                     -- rxvt-unicode daemon
    xmonad $ myUrgencyHook $ defaultConfig          -- run xmonad
       { terminal = userTerminalCommand
