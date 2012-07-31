@@ -168,29 +168,38 @@ alias reload="source $HOME/.bashrc"
 # I switch between distributions frequently, so it is helpful to have aliases
 # that do not conflict (for example yi meaning either yaourt or yum). This
 # section enables aliases based on the existence of the binary.
-
 # In [Arch Linux][arch], Pacman is the package manager.
 if [ -f /usr/bin/pacman ]; then
-    alias pi='sudo pacman-color -S --needed'    # install specified package if its not installed
-    alias pd='sudo pacman-color -Sy'            # refresh repositories
-    alias pu='sudo pacman-color -Syu'           # update system
-    alias pf='sudo pacman-color -Ss'            # search the repos
-    alias pl='sudo pacman-color -U'             # install a local pkg.txz file
-    alias pq='sudo pacman-color -Qs'            # search installed packages
-    alias pr='sudo pacman-color -Rdns'          # uninstall +deps +configs
+    # I like to `pacman-color`, which colorizes the output to Pacman, but I only
+    # want to alias to it if it is installed, so I do a quick check first.
+    if [ -f /usr/bin/pacman-color ]; then 
+        JOSH_PM_CMD="sudo pacman-color"
+    else
+        JOSH_PM_CMD="sudo pacman"
+    fi
+
+    alias pi="$JOSH_PM_CMD -S --needed $@"    # install specified package if its not installed
+    alias pd="$JOSH_PM_CMD -Sy $@"            # refresh repositories
+    alias pu="$JOSH_PM_CMD -Syu $@"           # update system
+    alias pf="$JOSH_PM_CMD -Ss $@"            # search the repos
+    alias pl="$JOSH_PM_CMD -U $@"             # install a local pkg.txz file
+    alias pq="$JOSH_PM_CMD -Qs $@"            # search installed packages
+    alias pr="$JOSH_PM_CMD -Rdns $@"          # uninstall +deps +configs
+
+    # For accessing the [Arch User Repository][aur] (i.e. unsupported packages and
+    # ports), I like Yaourt, which wraps Pacman with additional functionality for
+    # the AUR. Just shortcuts here too.
+    #
+    # [aur]: http://aur.archlinux.org
+    if [ -f /usr/bin/yaourt ]; then
+        alias yi='yaourt -S --needed'               # install and/or build specified package if its not installed
+        alias yf='yaourt -Ss'                       # search the Pacman repos and the AUR
+        alias yg='yaourt -Gs'                       # download a build script from the AUR
+    fi
 fi
 
-# For accessing the [Arch User Repository][aur] (i.e. unsupported packages and
-# ports), I like Yaourt, which wraps Pacman with additional functionality for
-# the AUR. Just shortcuts here too.
-#
-# [aur]: http://aur.archlinux.org
-if [ -f /usr/bin/yaourt ]; then
-    alias yi='yaourt -S --needed'               # install and/or build specified package if its not installed
-    alias yf='yaourt -Ss'                       # search the Pacman repos and the AUR
-    alias yg='yaourt -Gs'                       # download a build script from the AUR
-fi
-
+# On [Redhat][redhat]-based systems like [Fedora][fedora], the package
+# management tool is Yum, built on top of RPM.
 if [ -f /usr/bin/yum ]; then
     alias yi="sudo yum install"
     alias yf="sudo yum search"
