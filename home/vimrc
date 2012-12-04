@@ -43,8 +43,9 @@ set smartindent
 " expand tab keypresses to four spaces. I also set tabs to present themselves
 " as four spaces for those files that require tabs (like a Makefile).
 set expandtab
-set shiftwidth=4
-set softtabstop=4
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 
 " There some Vi compatibilities that I don't like, so I get rid of them. 
 set nocompatible
