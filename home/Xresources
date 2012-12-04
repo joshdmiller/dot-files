@@ -60,7 +60,8 @@ URxvt.keysym.C-Left     : \033[1;5D
 ! to all instances, whereas `perl-ext` would only apply to some instances. In
 ! most use cases, you will want to follow the pattern I use here, which is to
 ! place all custom plugins in `perl-ext-common`.
-URxvt.perl-ext-common   : default,tabbedex,url-select,clipboard
+!URxvt.perl-ext-common   : default,tabbedex,url-select,clipboard
+URxvt.perl-ext-common   : default,url-select,clipboard
 URxvt.perl-ext          : default
 
 ! Here I specify some basic options for the `url-select` plugin. The

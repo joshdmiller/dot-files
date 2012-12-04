@@ -119,7 +119,7 @@ username = "joshua"
 -- This is the sound control to pass to amixer when changing volume. This can
 -- be Front Master, Master, and others depending on your sound card. Use
 -- alsamixer to find which one you should use.
-userAmixerControl = "Front Master"
+userAmixerControl = "Master"
 
 -- The command used to lock the screen, e.g. gnome-screensaver, xscreensaver,
 -- slock, etc.
@@ -127,7 +127,7 @@ userScreenlockCommand = "/usr/bin/slock"
 
 -- This variable holds the user's preferred terminal, e.g. gnome-terminal,
 -- urxvt, xterm, lxterm, lilyterm, konsole, etc.
-userTerminalCommand = "urxvtc"
+userTerminalCommand = "urxvt"
 
 -- The location of the image files. You need not set this if you downloaded
 -- the package I provided and you do not have custom home folder. Just the
@@ -142,7 +142,7 @@ userModMask = mod4Mask
 -- This is the command used to launche the screensaver daemon If you use a
 -- screensaver as your lock, it needs to be running for the screen locker
 -- specified above to work.
-userScreensaverDaemonCommand = "xscreensaver -no-splash"
+-- userScreensaverDaemonCommand = "xscreensaver -no-splash"
 
 -- This is the command used to restore the wallpaper on XMonad start. I use
 -- [nitrogen][nitrogen].
@@ -465,6 +465,7 @@ myManageHook = composeAll
     ,   className                =? "mplayer"        --> doFloat
     ,   className                =? "Truecrypt"      --> doFloat
     ,   className                =? "sxiv"           --> doFloat
+    ,   className                =? "Synfig"         --> doFloat
     ,   className                =? "File-roller"    --> doFloat
     ,   stringProperty "WM_NAME" =? "Copying files"  --> doFloat
     ]
@@ -627,10 +628,11 @@ main = do
    conkyBarBottomL <- spawnPipe myConkyBarBottomL  -- open the bottom conky bar
    conkyBarBottomR <- spawnPipe myConkyBarBottomR  -- open the bottom conky bar
    wallpaper <- spawnPipe userWallpaperCommand
+--   screensaver <- spawnPipe userScreensaverCommand
    numlock <- spawnPipe "numlockx"
    xsetroot <- spawnPipe "xsetroot -cursor_name left_ptr"
-   xrdb <- spawnPipe "xrdb ~/.Xresources"          -- rxvt-unicode settings
-   urxtd <- spawnPipe "urxvtd"                     -- rxvt-unicode daemon
+--   xrdb <- spawnPipe "xrdb ~/.Xresources"          -- rxvt-unicode settings
+--   urxtd <- spawnPipe "urxvtd"                     -- rxvt-unicode daemon
    xmonad $ myUrgencyHook $ defaultConfig          -- run xmonad
       { terminal = userTerminalCommand
       , normalBorderColor  = myInactiveBorderColor
