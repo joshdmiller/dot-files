@@ -25,12 +25,6 @@
 [submodule "home/vim/packages/fugitive"]
 	path = home/vim/packages/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "home/vim/packages/snipmate"]
-	path = home/vim/packages/snipmate
-	url = https://github.com/garbas/vim-snipmate.git
-[submodule "home/vim/packages/snipmate-snippets"]
-	path = home/vim/packages/snipmate-snippets
-	url = https://github.com/honza/snipmate-snippets.git
 [submodule "home/vim/packages/addon-mw-utils"]
 	path = home/vim/packages/addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
