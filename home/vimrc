@@ -182,6 +182,12 @@ map <leader>wc :!wc -w %<CR>
 " Active the Tagbar plugin with `<F8>`.
 map <F8> :TagbarToggle<CR>
 
+" Also, for the Tagbar plugin, I use DoctorJS for its ctags-like output for
+" Javascript, so I need to tell TagBar to use it.
+let g:tagbar_type_javascript = {
+    \ 'ctagsbin' : '/usr/bin/jsctags'
+\ }
+
 " Visually select text then press ~ to convert the text to UPPER CASE, then to
 " lower case, then to Title Case. Keep pressing ~ until you get the case you
 " want.

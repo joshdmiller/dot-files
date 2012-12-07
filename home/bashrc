@@ -152,3 +152,6 @@ export EDITOR=vim
 # independent hard drive. I designed this setup to survive blasts.
 export REPOS=/store/dev/repos
 
+# In order to use DoctorJS, I need to add the jsctags library to my Node.js path.
+export NODE_PATH=/usr/lib/jsctags:$NODE_PATH
+
