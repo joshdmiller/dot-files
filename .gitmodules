@@ -57,4 +57,4 @@
 	url = git://github.com/othree/html5.vim.git
 [submodule "home/vim/packages/ultisnips"]
 	path = home/vim/packages/ultisnips
-	url = https://github.com/SirVer/ultisnips.git
+  url = git@github.com:joshdmiller/ultisnips.git
