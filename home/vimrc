@@ -123,6 +123,9 @@ let g:tex_flavor='latex'
 " For the CtrlP plugin, I want to ignore any files matching these patterns:
 set wildignore+=*/tmp/*,*.so,*.sw*,*.zip,*.tar.*,*.tar,.git/*,*/dojo/*,*/dijit/*,*/dojox/*
 
+" This is just some basic setup for the UltiSnips plugin.
+let g:UltiSnipsEditSplit = 'vertical'
+
 " ## Custom Key Mappings
 
 " Here are a few keybindings I've included for convenience. The first two map
