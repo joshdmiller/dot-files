@@ -58,3 +58,12 @@
 [submodule "home/vim/packages/ultisnips"]
 	path = home/vim/packages/ultisnips
   url = git@github.com:joshdmiller/ultisnips.git
+[submodule "home/vim/packages/bufexplorer"]
+	path = home/vim/packages/bufexplorer
+	url = https://github.com/c9s/bufexplorer.git
+[submodule "home/vim/packages/NrrwRgn"]
+	path = home/vim/packages/NrrwRgn
+	url = https://github.com/chrisbra/NrrwRgn.git
+[submodule "home/vim/packages/easymotion"]
+	path = home/vim/packages/easymotion
+	url = https://github.com/Lokaltog/vim-easymotion.git
