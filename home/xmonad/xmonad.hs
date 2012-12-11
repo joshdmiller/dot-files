@@ -511,6 +511,9 @@ myKeys = \conf -> mkKeymap conf $
                 
                 -- Swap this window with the previous one.
                 , ("M-S-j",        windows W.swapUp)
+
+                -- Raise this window to the top of the stack.
+                , ("M-r",          windows W.shiftMaster)
                 
                 -- Toggle struts; this can be useful for full-screen programs
                 -- that do not detect struts properly, like fullscreen firefox
