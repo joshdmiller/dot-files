@@ -50,9 +50,9 @@ set tabstop=2
 " There some Vi compatibilities that I don't like, so I get rid of them. 
 set nocompatible
 
-" I very much like the `Clean` monospaced/fixed-width font. This sets it as
-" the default when using GVim.
-set guifont=Terminus
+" I very much like the `Clean`, `Terminus`, and `Source Code Pro` fonts. This
+" sets one as the default when using GVim.
+set guifont=Source\ Code\ Pro\ 11
 
 " I prefer not to keep file history in the menus of GVim.
 let g:bmenu_max_pathlen=0
@@ -78,6 +78,11 @@ set ofu=syntaxcomplete#Complete
 " Eclipse or NetBeans. Further, we want the menu to show even if there was
 " only a single match.
 set completeopt=longest,menuone
+
+" Now we want Vim to behave like other editors with regard to open files; by
+" setting this option, Vim allows us to have edited buffers "hidden" behind
+" the current one.
+set hidden
 
 " ## Plugins
 
@@ -129,11 +134,12 @@ let g:UltiSnipsEditSplit = 'vertical'
 " ## Custom Key Mappings
 
 " Here are a few keybindings I've included for convenience. The first two map
-" `Control+s` to write out the current buffer and continue where I left off. The
-" third maps `Control+p` to put the contents of Vim's clipboard buffer to after
-" the cursor.
+" `Control+s` to write out the current buffer and continue where I left off.
+" The third maps `\w` to the same. Lastly, I map `Control+p` to put the
+" contents of Vim's clipboard buffer to after the cursor.
 imap <C-s> <ESC>:w<CR>a
 nmap <C-s> <ESC>:w<CR>
+nnoremap <leader>ww :w<CR>
 imap <C-p> <ESC>p<CR>a
 
 " When I use Vim for blogging or other writing, I like to enable auto-wrapping
