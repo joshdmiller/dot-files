@@ -52,7 +52,7 @@ set nocompatible
 
 " I very much like the `Clean`, `Terminus`, and `Source Code Pro` fonts. This
 " sets one as the default when using GVim.
-set guifont=Source\ Code\ Pro\ 11
+set guifont=Source\ Code\ Pro\ Semi-Bold\ 11
 
 " I prefer not to keep file history in the menus of GVim.
 let g:bmenu_max_pathlen=0
@@ -104,9 +104,10 @@ runtime pathogen/autoload/pathogen.vim
 call pathogen#infect('packages')
 
 " I like to have a darker color scheme when running GVim. Of the built-in
-" schemes, I tend to like moria, which is one of the plugins loaded by
-" Pathogen.
-colorscheme moria
+" schemes, I tend to like `vividchalk`, which is one of the plugins loaded by
+" Pathogen. I also like `moria` and `Tomorrow-Night-Bright`, which are
+" included as well.
+colorscheme vividchalk
 
 " One of the plugins I use is [NERDTree](https://github.com/scrooloose/nerdtree), 
 " a file tree explorer. If I launch Vim without specifying any file, I want it

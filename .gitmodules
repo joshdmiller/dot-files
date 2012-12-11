@@ -67,3 +67,6 @@
 [submodule "home/vim/packages/easymotion"]
 	path = home/vim/packages/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
+[submodule "home/vim/packages/jellybeans-colorscheme"]
+	path = home/vim/packages/jellybeans-colorscheme
+	url = https://github.com/nanotech/jellybeans.vim
