@@ -84,6 +84,18 @@ set completeopt=longest,menuone
 " the current one.
 set hidden
 
+" Vim usually sets up its handling of keys like `Ctrl-Left` and `Ctrl-Right`,
+" but when `$TERM` is set to anything starting with `screen`, it skips this
+" process. To account for my custom `urxvt` and `tmux` configurations, I set
+" up this handling myself.
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
+
 " ## Plugins
 
 " Adding and deleting Vim scripts can be tough to manage. If you code in, say,
@@ -131,6 +143,10 @@ set wildignore+=*/tmp/*,*.so,*.sw*,*.zip,*.tar.*,*.tar,.git/*,*/dojo/*,*/dijit/*
 
 " This is just some basic setup for the UltiSnips plugin.
 let g:UltiSnipsEditSplit = 'vertical'
+
+" For Syntastic, we must specify which linters we want to use for which
+" languages.
+let g:syntastic_javascript_checker = 'jslint'
 
 " ## Custom Key Mappings
 

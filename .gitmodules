@@ -70,3 +70,9 @@
 [submodule "home/vim/packages/jellybeans-colorscheme"]
 	path = home/vim/packages/jellybeans-colorscheme
 	url = https://github.com/nanotech/jellybeans.vim
+[submodule "home/vim/packages/syntastic"]
+	path = home/vim/packages/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "home/vim/packages/commentary"]
+	path = home/vim/packages/commentary
+	url = https://github.com/tpope/vim-commentary.git
