@@ -66,4 +66,5 @@ ${if_match ${battery_percent BAT0} < 20}^fg(red)LOW BATTERY$endif \
 $else\
 ^fg(green)^i($HOME/.xmonad/icons/power-ac.xbm) \
 ^fg(white)${battery_percent BAT0}% \
-$endif
+$endif | \
+^fg(skyblue)^i($HOME/.xmonad/icons/clock.xbm) ${time %d %B %H:%M} 

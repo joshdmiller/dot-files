@@ -19,7 +19,7 @@ import XMonad
 import XMonad.Core
  
 -- The XMonad prompt is the program launcher I use in XMonad. It is like
--- [dmenu][dmenu] but contains more features and is mnore easily themeable.
+-- [dmenu][dmenu] but contains more features and is more easily themeable.
 --
 -- [dmenu]: http://tools.suckless.org/dmenu/
 import XMonad.Prompt
@@ -104,14 +104,7 @@ workspacesWidthInt = read workspacesWidth :: Int
 userScreenWidthInt = read userScreenWidth :: Int
 userScreenHeightInt = read userScreenHeight :: Int
 userBarHeightInt = read userBarHeight :: Int
-
-conkyBLX = 0
-conkyBLY = userScreenHeightInt - userBarHeightInt
-conkyBLW = quot userScreenWidthInt 2
-
-conkyBRX = quot userScreenWidthInt 2
-conkyBRY = userScreenHeightInt - userBarHeightInt
-conkyBRW = quot userScreenWidthInt 2
+conkyBarY = userScreenHeightInt - userBarHeightInt
 
 -- This is the username of the person employing this configuration.
 username = "joshua"
@@ -119,7 +112,7 @@ username = "joshua"
 -- This is the sound control to pass to amixer when changing volume. This can
 -- be Front Master, Master, and others depending on your sound card. Use
 -- alsamixer to find which one you should use.
-userAmixerControl = "Master"
+userAmixerControl = "PCM"
 
 -- The command used to lock the screen, e.g. gnome-screensaver, xscreensaver,
 -- slock, etc.
@@ -174,44 +167,45 @@ isVisible = do
 -- This is an Xorg font string. You can pick one using the graphical xfontsel
 -- tool. Make sure the font is installed or there will be errors and your
 -- XMonad will not look right.
-userFont = "-*-terminus-*-*-*-*-12-*-*-*-*-*-iso8859-*"
+userFont = "-*-adobe source code pro light-*-*-*-*-12-*-*-*-*-*-iso8859-*"
 
 -- This is the height used for all the dzen bars and the Prompt.
-userBarHeight = "16"
+userBarHeight = "20"
 
 -- These are color definitions used throughout the configuration. Each has its
 -- own description.
-myBgBgColor = "black"             -- the screen bg color, assuming no wallpaper
-myFgColor = "gray80"              -- the color for the top & bottom bar fonts, by default
-myBgColor = "gray20"              -- the color of the top & bottom bars
-myActiveBorderColor = "green"     -- the border color of the currently-active window
-myInactiveBorderColor = "gray20"  -- the border color of all inactive windows
-myTitleFgColor = "white"          -- the text color of the title of the current window
+themeBgBgColor = "black"             -- the screen bg color, assuming no wallpaper
+themeFgColor = "gray80"              -- the color for the top & bottom bar fonts, by default
+themeBgColor = "gray20"              -- the color of the top & bottom bars
+themeActiveBorderColor = "green"     -- the border color of the currently-active window
+themeInactiveBorderColor = "gray20"  -- the border color of all inactive windows
+themeTitleFgColor = "white"          -- the text color of the title of the current window
 
 -- These are colors used for the XMonad Prompt (i.e. the launcher).
-myHighlightedFgColor = "white"    -- the color of selected text
-myHighlightedBgColor = "gray40"   -- the background color of selected text
+themeHighlightedFgColor = "white"    -- the color of selected text
+themeHighlightedBgColor = "gray40"   -- the background color of selected text
 
 -- These are the colors used for the currently-selected workspace labels.
-myCurrentWsFgColor = "white"      -- the text color of the current workspace label
-myCurrentWsBgColor = "gray40"     -- the bakcground color of the current workspace label
+themeCurrentWsFgColor = "white"      -- the text color of the current workspace label
+themeCurrentWsBgColor = "#439dcA"     -- the bakcground color of the current workspace label
 
--- These are the colors for the workspace label of visible but not focued (e.g.
+-- These are the colors for the workspace label of visible but not focused (e.g.
 -- Xinerama) workspaces.
-myVisibleWsFgColor = "gray80"     -- the text color of visible workspaces' labels
-myVisibleWsBgColor = "gray20"     -- the background color visible workspaces' labels
+themeVisibleWsFgColor = "gray80"     -- the text color of visible workspaces' labels
+themeVisibleWsBgColor = "gray20"     -- the background color visible workspaces' labels
 
 -- These are the colors for workspace labels that are not selected right now
 -- but have windows.
-myHiddenWsFgColor = "gray80"      -- the text color
+themeHiddenWsFgColor = "white"      -- the text color
+themeHiddenWsBgColor = "gray40"      -- the text color
 
 -- These are the colors for the workspace labels that are not selected right
 -- now and do not have windows.
-myHiddenEmptyWsFgColor = "gray50" -- the text color
+themeHiddenEmptyWsFgColor = "gray50" -- the text color
 
 -- These are the colors for the workspace labels needing attention.
-myUrgencyHintFgColor = "white"    -- the text color
-myUrgencyHintBgColor = "red"    -- the background color
+themeUrgencyHintFgColor = "white"    -- the text color
+themeUrgencyHintBgColor = "red"    -- the background color
 
 -- # TOP & BOTTOM BARS
 
@@ -221,9 +215,8 @@ myUrgencyHintBgColor = "red"    -- the background color
 -- workspaces to dzen, I use [conky][conky] to pipe system information to a
 -- dzen bar. This configuration contains three dzen bars:
 -- 
--- 1. The top-right - conky pipes system stats to dzen2
--- 2. The top-left - xmonad pipes workspace/layout/window information to dzen2
--- 3. The bottom - conky pipes MPD information to dzen2.
+-- 1. The bottom-right - conky pipes system stats to dzen2
+-- 2. The bottom-left - xmonad pipes workspace/layout/window information to dzen2
 --
 -- This section also contains configuration information for a program launcher
 -- called Prompt that is part of XMonad.
@@ -243,7 +236,7 @@ myUrgencyHintBgColor = "red"    -- the background color
 -- here. They define the basic colors used as well as the height, which we want
 -- to remain consistent to ensure the bars look like a top and bottom bar
 -- instead of four separate bars.
-myDzenGenOpts    = "-fg '" ++ myFgColor ++ "' -bg '" ++ myBgColor ++ "' -fn '" ++ userFont ++ "' -h '" ++ userBarHeight ++ "'"
+userDzenGenOpts    = "-fg '" ++ themeFgColor ++ "' -bg '" ++ themeBgColor ++ "' -fn '" ++ userFont ++ "' -h '" ++ userBarHeight ++ "'"
  
 -- ## Prompt (the program launcher)
 
@@ -254,10 +247,10 @@ myXPConfig = defaultXPConfig {
   position = Bottom,
   promptBorderWidth = 0,
   height = read userBarHeight,
-  bgColor = myBgColor,
-  fgColor = myFgColor,
-  fgHLight = myHighlightedFgColor,
-  bgHLight = myHighlightedBgColor,
+  bgColor = themeBgColor,
+  fgColor = themeFgColor,
+  fgHLight = themeHighlightedFgColor,
+  bgHLight = themeHighlightedBgColor,
   font = userFont
   }
 
@@ -278,20 +271,21 @@ myXPConfig = defaultXPConfig {
 -- the layout, and the window title.
 myDzenPP h = defaultPP {
   ppOutput = hPutStrLn h,
-  ppSep = "^bg(" ++ myBgBgColor ++ ")^r(1,"++ show(read(userBarHeight) - 1) ++")^bg()",
+  ppSep = "", -- "^bg(" ++ themeBgBgColor ++ ")^r(1,"++ show(read(userBarHeight) - 1) ++")^bg()",
   ppWsSep = "",
-  ppCurrent = wrapFgBg myCurrentWsFgColor myCurrentWsBgColor,
-  ppVisible = wrapFgBg myVisibleWsFgColor myVisibleWsBgColor,
-  ppHidden = wrapFg myHiddenWsFgColor,
-  ppHiddenNoWindows = wrapFg myHiddenEmptyWsFgColor,
-  ppUrgent = wrapBg myUrgencyHintBgColor,
-  ppTitle = (\x -> " " ++ wrapFg myTitleFgColor x),
+  ppCurrent = wrapFgBg themeCurrentWsFgColor themeCurrentWsBgColor,
+  ppVisible = wrapFgBg themeVisibleWsFgColor themeVisibleWsBgColor,
+  ppHidden = wrapFgBg themeHiddenWsFgColor themeHiddenWsBgColor,
+  ppHiddenNoWindows = wrapFg themeHiddenEmptyWsFgColor,
+  ppUrgent = wrapBg themeUrgencyHintBgColor,
+  ppTitle = (\x -> "^fg(" ++ themeCurrentWsBgColor ++ ")" ++ 
+    ( wrapBitmap "/play.xbm" ) ++ "^fg() " ++ wrapFg themeTitleFgColor x),
 
   -- ppLayout defines a function for outputting layout names. The method simply
   -- translates the name of a layout into a friendly icon that is drawn between
   -- the workspace list and the window title. These will need to be changed if
   -- you add or remove layouts or no icon will appear.  
-  ppLayout  = dzenColor myFgColor"" .
+  ppLayout  = dzenColor themeFgColor "" .
                 (\x -> case x of 
                     "ResizableTall" -> wrapBitmap "/tall.xbm"
                     "Mirror ResizableTall" -> wrapBitmap "/mtall.xbm"
@@ -305,15 +299,12 @@ myDzenPP h = defaultPP {
     wrapBg color content = wrap ("^bg(" ++ color ++ ")") "^bg()" content
     wrapBitmap bitmap = "^p(5)^i(" ++ userImagePath ++ bitmap ++ ")^p(5)"
 
--- This is the dzen command used to load the workspaces list.
-myStatusBar      = "dzen2 -w " ++ workspacesWidth ++ "  -ta l " ++ myDzenGenOpts
-
 -- ## An Urgency Bar
 
 -- The urgency bar is a dzen bar to be established when there is a window
 -- needing attention on a different workspace than the current one. Here, it is
 -- positioned at the bottom of the screen.
-myUrgencyHook = withUrgencyHook dzenUrgencyHook
+themeUrgencyHook = withUrgencyHook dzenUrgencyHook
     {
       args = [
          "-x", "0",
@@ -321,29 +312,24 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
          "-h", userBarHeight, 
          "-w", userScreenWidth,
          "-ta", "l",
-         "-fg", "" ++ myUrgencyHintFgColor ++ "",
-         "-bg", "" ++ myUrgencyHintBgColor ++ "",
+         "-fg", "" ++ themeUrgencyHintFgColor ++ "",
+         "-bg", "" ++ themeUrgencyHintBgColor ++ "",
          "-fn", userFont
          ]
     }
 
--- ## The Top Right Bar
-
--- This conky bar shows the current CPU load, RAM usage, core temperature, and
--- battery percentage.
-myConkyBar       = "conky -a mr -c ~/.xmonad/bin/conky_bar | dzen2 -x " ++ workspacesWidth ++ " -w " ++ (show (userScreenWidthInt - workspacesWidthInt)) ++ " -ta r " ++ myDzenGenOpts
-
 -- ## The Bottom Right Bar
-
--- This conky bar shows the current up and down network transfer rates, the
--- currently-connected WIFI access point, the temperature outside, and the date
--- and time.
-myConkyBarBottomR = "conky -c ~/.xmonad/bin/conky_bar_bottom_right | dzen2 -y " ++ (show conkyBRY) ++ " -x " ++ (show conkyBRX) ++ " -w " ++ (show conkyBRW) ++ " -ta r " ++ myDzenGenOpts
+-- TODO add comment
+myConkyBar  = "conky -a mr -c ~/.xmonad/bin/conky_bar | dzen2 -x " ++ workspacesWidth ++ 
+  " -y " ++ (show conkyBarY) ++
+  " -w " ++ (show (userScreenWidthInt - workspacesWidthInt)) ++ 
+  " -ta r " ++ userDzenGenOpts
 
 -- ## The Bottom Left Bar
-
--- This conky bar shows the volume, MPD status, and currently-playing track.
-myConkyBarBottomL = "conky -c ~/.xmonad/bin/conky_bar_bottom_left | dzen2 -y " ++ (show conkyBLY) ++ " -x " ++ (show conkyBLX) ++ " -w " ++ (show conkyBLW) ++ " -ta l " ++ myDzenGenOpts
+-- This is the dzen command used to load the workspaces list.
+myStatusBar = "dzen2 -w " ++ workspacesWidth ++ 
+  " -y " ++ (show conkyBarY) ++
+  " -ta l " ++ userDzenGenOpts
 
 -- # LAYOUT DEFINITIONS
 --
@@ -405,7 +391,7 @@ myWorkspaces = [
   supWsNum "9" "min" "pause.xbm"
   ]
   where
-    supWsNum wsNum wsName wsImg = "^ca(1,xdotool key Super_L+" ++ wsNum ++ ") ^i(" ++ userImagePath ++ wsImg ++ ") " ++ wsName ++ " ^ca()"
+    supWsNum wsNum wsName wsImg = "^ca(1,xdotool key Super_L+" ++ wsNum ++ ")  ^i(" ++ userImagePath ++ wsImg ++ ") " ++ wsName ++ "  ^ca()"
 
 -- ## Workspace Variables
 
@@ -628,18 +614,16 @@ myKeys = \conf -> mkKeymap conf $
 main = do
    myStatusBarPipe <- spawnPipe myStatusBar        -- open the top bar
    conkyBar <- spawnPipe myConkyBar                -- open the top conky bar
-   conkyBarBottomL <- spawnPipe myConkyBarBottomL  -- open the bottom conky bar
-   conkyBarBottomR <- spawnPipe myConkyBarBottomR  -- open the bottom conky bar
    wallpaper <- spawnPipe userWallpaperCommand
 --   screensaver <- spawnPipe userScreensaverCommand
    numlock <- spawnPipe "numlockx"
    xsetroot <- spawnPipe "xsetroot -cursor_name left_ptr"
 --   xrdb <- spawnPipe "xrdb ~/.Xresources"          -- rxvt-unicode settings
 --   urxtd <- spawnPipe "urxvtd"                     -- rxvt-unicode daemon
-   xmonad $ myUrgencyHook $ defaultConfig          -- run xmonad
+   xmonad $ themeUrgencyHook $ defaultConfig          -- run xmonad
       { terminal = userTerminalCommand
-      , normalBorderColor  = myInactiveBorderColor
-      , focusedBorderColor = myActiveBorderColor
+      , normalBorderColor  = themeInactiveBorderColor
+      , focusedBorderColor = themeActiveBorderColor
       , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
       , layoutHook = myLayoutHook
       , startupHook = setWMName "XMONAD"
