@@ -73,3 +73,12 @@
 [submodule "home/dwm"]
 	path = home/dwm
 	url = https://github.com/joshdmiller/dwm-customizations
+[submodule "home/vim/packages/surround"]
+	path = home/vim/packages/surround
+	url = git://github.com/tpope/vim-surround.git
+[submodule "home/vim/packages/ragtag"]
+	path = home/vim/packages/ragtag
+	url = git://github.com/tpope/vim-ragtag.git
+[submodule "home/vim/packages/zencoding"]
+	path = home/vim/packages/zencoding
+	url = git://github.com/mattn/zencoding-vim.git
