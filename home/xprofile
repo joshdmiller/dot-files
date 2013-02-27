@@ -4,4 +4,5 @@ xset +fp /usr/share/fonts/local
 xset +fp /usr/share/fonts/OTF
 xset fp rehash
 xrdb ~/.Xresources
+xset -dpms
 
