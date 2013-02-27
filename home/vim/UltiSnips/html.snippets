@@ -1,5 +1,50 @@
-snippet div "A better div tag implementation" b
+###
+# Enhancements to Default Snippets
+###
+
+snippet div "A better div tag implementation" !b
 <div class="$1">
   $2
 </div>
 endsnippet
+
+snippet h1 "An id-less h1" !b
+<h1>$1</h1>$0
+endsnippet
+
+snippet h2 "An id-less h2" !b
+<h2>$1</h2>$0
+endsnippet
+
+snippet h3 "An id-less h3" !b
+<h3>$3</h3>$0
+endsnippet
+
+snippet h4 "An id-less h4" !b
+<h4>$4</h4>$0
+endsnippet
+
+snippet p "A multi-line paragraph tag" !b
+<p>
+  $1
+</p>$0
+endsnippet
+
+###
+# Bootstrap Snippets!
+###
+
+snippet row "A Bootstrap grid row" b
+<div class="row">
+  <div class="span$1">
+    $2
+  </div>$0
+</div>
+endsnippet
+
+snippet span "A Bootstrap div with a span class" !b
+<${1:div} class="span$2">
+  $3
+</$1>$0
+endsnippet
+
