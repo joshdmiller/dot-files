@@ -76,3 +76,6 @@
 [submodule "home/vim/packages/commentary"]
 	path = home/vim/packages/commentary
 	url = https://github.com/tpope/vim-commentary.git
+[submodule "home/zsh"]
+	path = home/zsh
+	url = git://github.com/joshdmiller/oh-my-zsh.git
