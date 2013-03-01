@@ -196,6 +196,18 @@ if [ -f /usr/bin/pacman ]; then
         alias yf='yaourt -Ss'                       # search the Pacman repos and the AUR
         alias yg='yaourt -Gs'                       # download a build script from the AUR
     fi
+
+    # But I also like [Aura](https://wiki.archlinux.org/index.php/Aura).
+    if [ -f /usr/bin/aura ]; then
+      alias as='aura -As'                   # search the AUR using a regex
+      alias ai='sudo aura -Axa --hotedit'   # build and install an AUR package 
+      alias au='sudo aura -Akua'            # update all installed packages and remove build deps
+      alias ad='aura -Ad'                   # display a packages dependencies recursively
+      alias alp='aura -Li'                  # display log for a package
+      alias als='aura -Ls'                  # search the log for the regex
+      alias al='aura -L'                    # tail the log
+      alias ao='aura -O'                    # display orphan packages
+    fi
 fi
 
 # On [Redhat][redhat]-based systems like [Fedora][fedora], the package
