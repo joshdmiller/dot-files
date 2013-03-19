@@ -449,6 +449,7 @@ myManageHook = composeAll
     [ 
         className                =? "Gimp"           --> doFloat 
     ,   className                =? "mplayer"        --> doFloat
+    ,   className                =? "mplayer2"        --> doFloat
     ,   className                =? "Truecrypt"      --> doFloat
     ,   className                =? "sxiv"           --> doFloat
     ,   className                =? "Synfig"         --> doFloat

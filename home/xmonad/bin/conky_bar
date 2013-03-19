@@ -52,12 +52,27 @@ alignment mr
 # discharging icon.
 TEXT
 $alignr
+${if_up eth0}\
+^fg(green)^i($HOME/.xmonad/icons/net_up_02.xbm) \
+^fg(white)${upspeed eth0} \
+^fg(green)^i($HOME/.xmonad/icons/net_down_02.xbm) \
+^fg(white)${downspeed eth00} | \
+^fg(white)Wired | \
+$endif\
+${if_up wlan0}
+^fg(green)^i($HOME/.xmonad/icons/net_up_02.xbm) \
+^fg(white)${upspeed wlan0} \
+^fg(green)^i($HOME/.xmonad/icons/net_down_02.xbm) \
+^fg(white)${downspeed wlan0} | \
+^fg(green)^i($HOME/.xmonad/icons/net-wifi.xbm) \
+^fg(white)${wireless_essid wlan0} at \
+^fg(white)${wireless_link_qual_perc wlan0}% | \
+$endif\
 ^fg(green)^i($HOME/.xmonad/icons/cpu.xbm) \
 ^fg(white)${loadavg 1} | \
 ^fg(green)^i($HOME/.xmonad/icons/mem.xbm) \
-^fg(white)$memperc% | \
-^fg(green)^i($HOME/.xmonad/icons/temp.xbm) \
-^fg(white)${execi 60 sensors -A | grep temp1 | awk '{print $2}' | sed 's/+//' | sed 's/C//'} | \
+^fg(white)$memperc%\
+${if_match "${exec acpi}" != ""} | \
 ^fg(white)${if_match "${exec acpi | awk '{print $3}' | sed 's/,//'}" == "Discharging"}\
 ^fg(green)^i($HOME/.xmonad/icons/bat_empty_01.xbm) \
 ^fg(white)${battery_percent BAT0}% \
@@ -66,6 +81,7 @@ ${if_match ${battery_percent BAT0} < 20}^fg(red)LOW BATTERY$endif \
 $else\
 ^fg(green)^i($HOME/.xmonad/icons/power-ac.xbm) \
 ^fg(white)${battery_percent BAT0}% \
+$endif\
 $endif\
 ^fg(white) | \
 ^fg(skyblue)^i($HOME/.xmonad/icons/clock.xbm) ${time %d %B %H:%M} 
