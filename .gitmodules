@@ -91,3 +91,15 @@
 [submodule "home/vim/packages/zencoding"]
 	path = home/vim/packages/zencoding
 	url = git://github.com/mattn/zencoding-vim.git
+[submodule "home/vim/packages/indent-guides"]
+	path = home/vim/packages/indent-guides
+	url = git://github.com/nathanaelkane/vim-indent-guides.git
+[submodule "home/vim/packages/YouCompleteMe"]
+	path = home/vim/packages/YouCompleteMe
+	url = git://github.com/Valloric/YouCompleteMe.git
+[submodule "home/vim/packages/fenced-code-blocks"]
+	path = home/vim/packages/fenced-code-blocks
+	url = https://github.com/amiorin/vim-fenced-code-blocks.git
+[submodule "home/vim/packages/signify"]
+	path = home/vim/packages/signify
+	url = git://github.com/mhinz/vim-signify.git

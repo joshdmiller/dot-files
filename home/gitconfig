@@ -1,0 +1,8 @@
+[user]
+	email = josh@joshdmiller.com
+	name = Josh David Miller
+[push]
+	default = simple
+[core]
+	editor = vim
+	excludesfile = /home/joshua/.gitignore_global
