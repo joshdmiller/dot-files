@@ -12,6 +12,10 @@
 
 " ## Basic Options
 
+" Rather than the traditional '\', I prefer my leader to be a little closer to
+" the home row, so I change it to ','.
+let mapleader=","
+
 " The majority of the time I run Vim, there is something with a defined
 " syntax, from this very file to Go source code to CoffeeScript files to
 " stylesheets. The following option enables syntax highlighting that filetype
@@ -19,13 +23,13 @@
 syntax on
 
 " No matter what I am editing, I like to see line numbers to the left.
-set number
+set rnu
 
 " As a matter of best practice, I try to keep all lines in files from
 " exceeding 80 characters so there are no wrapping issues when viewed
 " anywhere. The following command will create a vertical line at 80
-" characters. In most of my color themes, it will show as red.
-set colorcolumn=80
+" characters. In most of my color themes, it will show as gray.
+set colorcolumn=100
 
 " I want the status line that appears at the bottom of the screen to be
 " visible by default, rather than only under certain conditions.
@@ -52,7 +56,7 @@ set nocompatible
 
 " I very much like the `Clean`, `Terminus`, and `Source Code Pro` fonts. This
 " sets one as the default when using GVim.
-set guifont=Source\ Code\ Pro\ Semi-Bold\ 11
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Semi-Bold\ 9
 
 " I prefer not to keep file history in the menus of GVim.
 let g:bmenu_max_pathlen=0
@@ -139,7 +143,7 @@ set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
 
 " For the CtrlP plugin, I want to ignore any files matching these patterns:
-set wildignore+=*/tmp/*,*.so,*.sw*,*.zip,*.tar.*,*.tar,.git/*,*/dojo/*,*/dijit/*,*/dojox/*
+set wildignore+=*/tmp/*,*.so,*.sw*,*.zip,*.tar.*,*.tar,.git/*,*/dojo/*,*/dijit/*,*/dojox/*,*/node_modules/*,*/vendor/*,*/build/*,*/bin/*
 
 " This is just some basic setup for the UltiSnips plugin.
 let g:UltiSnipsEditSplit = 'vertical'
@@ -149,6 +153,18 @@ let g:UltiSnipsEditSplit = 'vertical'
 let g:syntastic_javascript_checker = 'jslint'
 
 " ## Custom Key Mappings
+
+" Disable the arrow keys and the home/end keys. Filthy habits die hard.
+inoremap  <Up>     <NOP>
+inoremap  <Down>   <NOP>
+inoremap  <Left>   <NOP>
+inoremap  <Right>  <NOP>
+noremap   <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>
+noremap   <Home>   <NOP>
+noremap   <End>    <NOP>
 
 " Here are a few keybindings I've included for convenience. The first two map
 " `Control+s` to write out the current buffer and continue where I left off.
@@ -213,6 +229,14 @@ map <F8> :TagbarToggle<CR>
 let g:tagbar_type_javascript = {
     \ 'ctagsbin' : '/usr/bin/jsctags'
 \ }
+
+" YouCompleteMe defaults to using the TAB key, which conflicts with UltiSnips.
+" Due to recent integration efforts, the best approach is to remap the
+" UltiSnips command key:
+let g:UltiSnipsExpandTrigger = '<c-l>'
+"let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+"let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+"let g:UltiSnipsListSnippets = '<c-m>'
 
 " Visually select text then press ~ to convert the text to UPPER CASE, then to
 " lower case, then to Title Case. Keep pressing ~ until you get the case you
