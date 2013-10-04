@@ -1,6 +1,3 @@
-[submodule "home/vim/packages/powerline"]
-	path = home/vim/packages/powerline
-	url = https://github.com/Lokaltog/vim-powerline.git
 [submodule "home/vim/packages/nerdtree"]
 	path = home/vim/packages/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
