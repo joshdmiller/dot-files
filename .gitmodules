@@ -87,7 +87,7 @@
 	url = git://github.com/tpope/vim-ragtag.git
 [submodule "home/vim/packages/zencoding"]
 	path = home/vim/packages/zencoding
-	url = git://github.com/mattn/zencoding-vim.git
+	url = git://github.com/mattn/emmet-vim.git
 [submodule "home/vim/packages/indent-guides"]
 	path = home/vim/packages/indent-guides
 	url = git://github.com/nathanaelkane/vim-indent-guides.git
@@ -100,3 +100,12 @@
 [submodule "home/vim/packages/signify"]
 	path = home/vim/packages/signify
 	url = git://github.com/mhinz/vim-signify.git
+[submodule "home/vim/packages/airline"]
+	path = home/vim/packages/airline
+	url = https://github.com/bling/vim-airline
+[submodule "home/vim/packages/startify"]
+	path = home/vim/packages/startify
+	url = https://github.com/mhinz/vim-startify
+[submodule "home/vim/packages/luna-color-scheme"]
+	path = home/vim/packages/luna-color-scheme
+	url = https://github.com/Pychimp/vim-luna.git

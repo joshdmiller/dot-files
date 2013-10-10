@@ -51,7 +51,7 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 
-" There some Vi compatibilities that I don't like, so I get rid of them. 
+" There some Vi compatibilities that I don't like, so I get rid of them.
 set nocompatible
 
 " I very much like the `Clean`, `Terminus`, and `Source Code Pro` fonts. This
@@ -107,9 +107,9 @@ endif
 " more - and all of these files are stored in separate directories along with
 " like files from all of your other plugins. If you want to remove a plugin,
 " you must search all of these directories and delete them manually. What a
-" mess. Instead, I love the [Pathogen](https://github.com/tpope/vim-pathogen) 
+" mess. Instead, I love the [Pathogen](https://github.com/tpope/vim-pathogen)
 " package management system. It allows you to keep all of your plugins in
-" their own directories, so adding and deleting is a breeze. 
+" their own directories, so adding and deleting is a breeze.
 
 " To load it, I first add Pathogen's autoload to the runtime and then I call
 " `Pathogen#infect` to load all my plugins, passing it the folder inside
@@ -125,13 +125,13 @@ call pathogen#infect('packages')
 " included as well.
 colorscheme vividchalk
 
-" One of the plugins I use is [NERDTree](https://github.com/scrooloose/nerdtree), 
+" One of the plugins I use is [NERDTree](https://github.com/scrooloose/nerdtree),
 " a file tree explorer. If I launch Vim without specifying any file, I want it
 " to open NERDTree.
 "
 " Also, I do not need all files to appear, so I tell NERDTree to ignore
 " certain types of files.
-autocmd GuiEnter * if !argc() | edit `pwd` | endif
+"autocmd GuiEnter * if !argc() | edit `pwd` | endif
 let NERDTreeIgnore=[ '\.o$', '\.swp$', '\~$', '\.class$' ]
 
 " For some reason, YAML files do not have filetype detection, so we add it
@@ -237,6 +237,15 @@ let g:UltiSnipsExpandTrigger = '<c-l>'
 "let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 "let g:UltiSnipsListSnippets = '<c-m>'
+
+" Automatically populate the g:airline_symbols dictionary with the powerline
+" symbols.
+let g:airline_powerline_fonts = 1
+
+" Use two space indentation for emmet/zencoding
+let g:user_emmet_settings = {
+      \  'indentation' : '  ',
+      \}
 
 " Visually select text then press ~ to convert the text to UPPER CASE, then to
 " lower case, then to Title Case. Keep pressing ~ until you get the case you
