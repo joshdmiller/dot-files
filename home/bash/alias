@@ -85,6 +85,7 @@ fi
 # As Vim is my favorite editor, I spend much time in it (also in GVim) so I
 # alias that too.
 alias v='vim'
+alias gv='gvim'
 
 # The df command prints out the amount of free space on one's media. The -h
 # flag simply forces the output into human-readable numbers (e.g. like 1024K
@@ -92,8 +93,8 @@ alias v='vim'
 alias df='df -h'
 
 # The free command reports system memory usage in a
-# similar fashion. The -m flag makes its output in megabytes instead of bytes.
-alias free='free -m'
+# similar fashion. The -h flag makes it output sizes in a human-readable format.
+alias free='free -h'
 
 # The du command reports on the disk usage of specified files or directories. I
 # don't usually care about the file-by-file report, so I only print the summary
@@ -136,14 +137,13 @@ alias openports='netstat --all --numeric --programs --inet'
 # [ifconfigme]: http://www.ifconfig.me
 alias myip="curl ifconfig.me"
 
-# I netcfg2 on [Arch Linux][arch] to manage my network connections. On my
-# laptop, it is convenient to have a shorter alias.
-alias net='sudo netcfg2'
-
 # ## Directory Convenience
 
 # It's only three keystrokes, but it all adds up!
 alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 
 # I always want to create directories recursively if a parent folder does not
 # exist.
@@ -153,15 +153,16 @@ alias mkdir='mkdir -p'
 # a one-character alias to do so.
 alias r='cd /store/dev/repos'
 
-# ## Bash Helpers
+# ## Shell Helpers
 
 # I often search my history, so I created an alias to grep it.
-alias hist='history | grep $1'
+alias hist='history | grep'
 
-# When I make changes to my bash configuration, I either need to log-in again
+# When I make changes to my bash or zsh configuration, I either need to log-in again
 # or source my bashrc. The latter is more convenient, so here's a quick alias
 # to reload my configuration.
-alias reload="source $HOME/.bashrc"
+alias bashload="source $HOME/.bashrc"
+alias zshload="source $HOME/.zhrc"
 
 # ## Package Management
 
@@ -170,13 +171,7 @@ alias reload="source $HOME/.bashrc"
 # section enables aliases based on the existence of the binary.
 # In [Arch Linux][arch], Pacman is the package manager.
 if [ -f /usr/bin/pacman ]; then
-    # I like to `pacman-color`, which colorizes the output to Pacman, but I only
-    # want to alias to it if it is installed, so I do a quick check first.
-    if [ -f /usr/bin/pacman-color ]; then 
-        JOSH_PM_CMD="sudo pacman-color"
-    else
-        JOSH_PM_CMD="sudo pacman"
-    fi
+    JOSH_PM_CMD="sudo pacman"
 
     alias pi="$JOSH_PM_CMD -S --needed $@"    # install specified package if its not installed
     alias pd="$JOSH_PM_CMD -Sy $@"            # refresh repositories
@@ -212,6 +207,8 @@ fi
 
 # On [Redhat][redhat]-based systems like [Fedora][fedora], the package
 # management tool is Yum, built on top of RPM.
+#
+# [fedora]: http://fedora-project.org
 if [ -f /usr/bin/yum ]; then
     alias yi="sudo yum install"
     alias yf="sudo yum search"
@@ -219,30 +216,42 @@ if [ -f /usr/bin/yum ]; then
     alias yu="sudo yum update"
 fi
 
+# ## Netctl
+# On Arch Linux, I use Netctl, but running the up and down commands is a pain in the butt.
+if [ -f /usr/bin/netctl ]; then
+  alias nu='sudo netctl start'
+  alias nd='sudo netctl stop'
+  alias ns='sudo netctl switch-to'
+fi
+
 # ## Git
 
 # Git is my favorite version control system and I am in it literally every day.
 # I use it for document versioning, local wikis, and of course source code.
 # There is nothing fancy here; these are just to save keystrokes.
-alias gco='git checkout'
-alias gc='git commit'
-alias g+='git add'
-alias gpush='git push'
-alias gpull='git pull'
-alias gs='git status'
-alias gb='git branch'
-alias gl='git log'
-alias gdiff='git diff'
+if [ -f /usr/bin/git ]; then
+  alias gco='git checkout'
+  alias gc='git commit'
+  alias g+='git add'
+  alias gpush='git push'
+  alias gpull='git pull'
+  alias gs='git status'
+  alias gb='git branch'
+  alias gl='git log'
+  alias gdiff='git diff'
+fi
 
 # ## Bazaar
-
+#
 # I also have occasion to use Bazaar, so I try and save keystrokes here too.
-alias bb="bzr branch"
-alias bc="bzr commit"
-alias ba="bzr add"
-alias bm="bzr merge"
-alias bdiff="bzr diff"
-alias bl="bzr log -n0"
+if [ -f /usr/bin/bzr ]; then
+  alias bb="bzr branch"
+  alias bc="bzr commit"
+  alias ba="bzr add"
+  alias bm="bzr merge"
+  alias bdiff="bzr diff"
+  alias bl="bzr log -n0"
+fi
 
 # ## Task Warrior
 
@@ -252,8 +261,10 @@ alias bl="bzr log -n0"
 # due dates, and lots of fun features.
 #
 # [taskwarrior]: http://www.taskwarrior.org
-alias ta='task add'
-alias tl='task long'
-alias ts='task'
+  if [ -f /usr/bin/task ]; then
+  alias ta='task add'
+  alias tl='task long'
+  alias ts='task'
+fi
 
 

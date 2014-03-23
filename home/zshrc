@@ -26,16 +26,22 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
-  archlinux 
   git 
   git-extras 
   git-remote-branch 
-  history 
+  gitfast
   history-substring-search
   npm
   systemd
-  themes 
   vi-mode
+  bower
+  coffee
+  aws
+  dircycle
+  last-working-dir
+  tmux
+  urltools
+  wd
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -65,7 +71,7 @@ key[PageDown]=${terminfo[knp]}
 [[ -n "${key[Left]}"    ]]  && bindkey  "${key[Left]}"    backward-char
 [[ -n "${key[Right]}"   ]]  && bindkey  "${key[Right]}"   forward-char
 
-# Finally, make sure the terminal is in application mode, when zle is
+# Make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if [[ -n ${terminfo[smkx]} ]] && [[ -n ${terminfo[rmkx]} ]]; then
   function zle-line-init () {
@@ -77,3 +83,10 @@ if [[ -n ${terminfo[smkx]} ]] && [[ -n ${terminfo[rmkx]} ]]; then
   zle -N zle-line-init
   zle -N zle-line-finish  
 fi
+
+# Sometimes I have commands or properties that I want on only a single machine. The following checks
+# for such a sourceable script and loads it.
+if [[ -f $BASH/custom.sh ]]; then
+  source $BASH/custom.sh
+fi
+
