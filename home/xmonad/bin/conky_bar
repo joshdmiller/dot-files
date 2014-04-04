@@ -52,11 +52,11 @@ alignment mr
 # discharging icon.
 TEXT
 $alignr
-${if_up eth0}\
+${if_up enp5s0}\
 ^fg(green)^i($HOME/.xmonad/icons/net_up_02.xbm) \
-^fg(white)${upspeed eth0} \
+^fg(white)${upspeed enp5s0} \
 ^fg(green)^i($HOME/.xmonad/icons/net_down_02.xbm) \
-^fg(white)${downspeed eth00} | \
+^fg(white)${downspeed enp5s0} | \
 ^fg(white)Wired | \
 $endif\
 ${if_up wlan0}

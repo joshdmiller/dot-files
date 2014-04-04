@@ -78,6 +78,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.ManageHelpers
 
 -- # USER-SPECIFIC VARIABLES
 
@@ -90,13 +91,13 @@ import XMonad.Hooks.SetWMName
 -- overflow.
 --
 -- **TODO:** Use X11 libraries to generate these based on your screen resolution.
-userScreenWidth  = "1680"
-userScreenHeight = "1050"
+userScreenWidth  = "1920"
+userScreenHeight = "1080"
 
 -- The following are some width settings based on your defined screen height
 -- and width. They are probably fine. but if you have a very large or very
 -- small screen, you may need to adjust these.
-workspacesWidth = "800"
+workspacesWidth = "1000"
 
 -- For convenience, some of the above need to be converted by type or
 -- calculated.
@@ -449,9 +450,11 @@ myManageHook = composeAll
     [ 
         className                =? "Gimp"           --> doFloat 
     ,   className                =? "mplayer"        --> doFloat
-    ,   className                =? "mplayer2"        --> doFloat
+    ,   className                =? "mplayer2"       --> doFloat
+    ,   className                =? "Vlc"            --> doFloat
+    ,   className                =? "xine"           --> doFloat
     ,   className                =? "Truecrypt"      --> doFloat
-    ,   className                =? "sxiv"           --> doFloat
+    ,   className                =? "Sxiv"           --> doFloat
     ,   className                =? "Synfig"         --> doFloat
     ,   className                =? "File-roller"    --> doFloat
     ,   stringProperty "WM_NAME" =? "Copying files"  --> doFloat
