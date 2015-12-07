@@ -6,8 +6,8 @@
 ! These variables control the cursor theme used in X11. The available themes
 ! are listed in `/usr/share/icons` along with non-cursor icon themes. The size
 ! is the pixel size of the cursor to use.
-Xcursor.theme           : Oxygen_Black
-Xcursor.size            : 16
+!Xcursor.theme           : Oxygen_Zion
+!Xcursor.size            : 22
 
 ! ## URxt
 ! URxvt (also known as rxvt-unicode) is a lightweight but extensible X11
@@ -32,7 +32,7 @@ URxvt.perl-lib          : /home/joshua/Development/repos/dot-files/home/urxvt/pe
 ! `right`.
 URxvt.background        : black
 URxvt.foreground        : white
-URxvt.font              : xft:Source Code Pro Semibold-9
+URxvt.font              : xft:Source Code Pro:pixelsize=16,style=Regular
 URxvt.scrollBar         : off
 
 ! URxvt by default does not support using the control+arrows to advance or
@@ -110,4 +110,8 @@ URxvt.keysym.M-C-v      : perl:clipboard:paste_escaped
 URxvt.keysym.M-u        : perl:url-select:select_next
 
 URxvt.iso14755_52       : False
+
+! ## dzen
+
+dzen2.font              : xft:Source Code Pro:pixelsize=14,style=Regular
 
