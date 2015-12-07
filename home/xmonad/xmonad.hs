@@ -11,6 +11,9 @@
 -- functionality for this configuration.
 import Control.Monad (liftM)
 import System.IO
+import System.Environment
+import Data.Char
+import XMonad.Util.Font
 import Graphics.X11.Xlib
 import System.Exit
 import qualified Data.Map as M
@@ -91,13 +94,13 @@ import XMonad.Hooks.ManageHelpers
 -- overflow.
 --
 -- **TODO:** Use X11 libraries to generate these based on your screen resolution.
-userScreenWidth  = "1920"
-userScreenHeight = "1080"
+userScreenWidth  = "3840"
+userScreenHeight = "2160"
 
 -- The following are some width settings based on your defined screen height
 -- and width. They are probably fine. but if you have a very large or very
 -- small screen, you may need to adjust these.
-workspacesWidth = "1000"
+workspacesWidth = "2000"
 
 -- For convenience, some of the above need to be converted by type or
 -- calculated.
@@ -168,10 +171,10 @@ isVisible = do
 -- This is an Xorg font string. You can pick one using the graphical xfontsel
 -- tool. Make sure the font is installed or there will be errors and your
 -- XMonad will not look right.
-userFont = "-*-adobe source code pro light-*-*-*-*-12-*-*-*-*-*-iso8859-*"
+userFont = "-*-dejavu sans-*-*-*-*-20-*-*-*-*-*-*-*"
 
 -- This is the height used for all the dzen bars and the Prompt.
-userBarHeight = "20"
+userBarHeight = "30"
 
 -- These are color definitions used throughout the configuration. Each has its
 -- own description.
@@ -272,7 +275,7 @@ myXPConfig = defaultXPConfig {
 -- the layout, and the window title.
 myDzenPP h = defaultPP {
   ppOutput = hPutStrLn h,
-  ppSep = "", -- "^bg(" ++ themeBgBgColor ++ ")^r(1,"++ show(read(userBarHeight) - 1) ++")^bg()",
+  ppSep = " · ", -- "^bg(" ++ themeBgBgColor ++ ")^r(1,"++ show(read(userBarHeight) - 1) ++")^bg()",
   ppWsSep = "",
   ppCurrent = wrapFgBg themeCurrentWsFgColor themeCurrentWsBgColor,
   ppVisible = wrapFgBg themeVisibleWsFgColor themeVisibleWsBgColor,
@@ -280,7 +283,7 @@ myDzenPP h = defaultPP {
   ppHiddenNoWindows = wrapFg themeHiddenEmptyWsFgColor,
   ppUrgent = wrapBg themeUrgencyHintBgColor,
   ppTitle = (\x -> "^fg(" ++ themeCurrentWsBgColor ++ ")" ++ 
-    ( wrapBitmap "/play.xbm" ) ++ "^fg() " ++ wrapFg themeTitleFgColor x),
+    "^fg()" ++ wrapFg themeTitleFgColor x),
 
   -- ppLayout defines a function for outputting layout names. The method simply
   -- translates the name of a layout into a friendly icon that is drawn between
@@ -288,10 +291,10 @@ myDzenPP h = defaultPP {
   -- you add or remove layouts or no icon will appear.  
   ppLayout  = dzenColor themeFgColor "" .
                 (\x -> case x of 
-                    "ResizableTall" -> wrapBitmap "/tall.xbm"
-                    "Mirror ResizableTall" -> wrapBitmap "/mtall.xbm"
-                    "Full" -> wrapBitmap "/full.xbm"
-                    "Tabbed Simplest" -> wrapBitmap "/tab.xbm"
+                    "ResizableTall"         -> wrapFg themeVisibleWsFgColor "[cols]"
+                    "Mirror ResizableTall"  -> wrapFg themeVisibleWsFgColor "[rows]"
+                    "Full"                  -> wrapFg themeVisibleWsFgColor "[full]"
+                    "Tabbed Simplest"       -> wrapFg themeVisibleWsFgColor "[tabs]"
                 )
   }
   where
@@ -352,9 +355,12 @@ myStatusBar = "dzen2 -w " ++ workspacesWidth ++
 
 -- myLayoutHook is the variable that holds the list of layouts currently
 -- employed in this configuration.
-myLayoutHook = avoidStruts $ smartBorders $ ( tiled ||| Mirror tiled ||| simpleTabbed ||| Full )
+myLayoutHook = avoidStruts $ smartBorders $ ( tiled ||| Mirror tiled ||| tabbed shrinkText tabTheme ||| Full )
   where
     tiled = ResizableTall nmaster delta ratio []
+    tabTheme = defaultTheme { fontName = userFont,
+      decoHeight = 30
+      }
     nmaster = 1
     delta = 3/100
     ratio = 1/2
@@ -380,19 +386,20 @@ myLayoutHook = avoidStruts $ smartBorders $ ( tiled ||| Mirror tiled ||| simpleT
 -- The images are expected to be found in the userImagePath specified earlier in the
 -- file and MUST be absolute as $HOME and ~ will not work with dzen2. Boo.
 
-myWorkspaces = [
-  supWsNum "1" "web" "fox.xbm",
-  supWsNum "2" "dev" "arch_10x10.xbm",
-  supWsNum "3" "term" "arch.xbm",
-  supWsNum "4" "media" "play.xbm",
-  supWsNum "5" "man" "info_03.xbm",
-  supWsNum "6" "enc" "shroom.xbm",
-  supWsNum "7" "misc" "empty.xbm",
-  supWsNum "8" "misc" "empty.xbm",
-  supWsNum "9" "min" "pause.xbm"
+myWorkspaces =
+  [
+    supWsNum "1" "web" "fox.xbm",
+    supWsNum "2" "dev" "arch_10x10.xbm",
+    supWsNum "3" "term" "arch.xbm",
+    supWsNum "4" "media" "play.xbm",
+    supWsNum "5" "man" "info_03.xbm",
+    supWsNum "6" "enc" "shroom.xbm",
+    supWsNum "7" "misc" "empty.xbm",
+    supWsNum "8" "misc" "empty.xbm",
+    supWsNum "9" "min" "pause.xbm"
   ]
   where
-    supWsNum wsNum wsName wsImg = "^ca(1,xdotool key Super_L+" ++ wsNum ++ ")  ^i(" ++ userImagePath ++ wsImg ++ ") " ++ wsName ++ "  ^ca()"
+    supWsNum wsNum wsName wsImg ="^ca(1,xdotool key Super_L+" ++ wsNum ++ ")  " ++ wsNum ++ "  ^ca()"
 
 -- ## Workspace Variables
 
@@ -457,7 +464,9 @@ myManageHook = composeAll
     ,   className                =? "Sxiv"           --> doFloat
     ,   className                =? "Synfig"         --> doFloat
     ,   className                =? "File-roller"    --> doFloat
+    ,   className                =? "Geeqie"         --> doShift musicWs
     ,   stringProperty "WM_NAME" =? "Copying files"  --> doFloat
+    ,   stringProperty "WM_WINDOW_ROLE" =? "pop-up"  --> doFloat
     ]
  
 -- # KEY BINDINGS
@@ -565,10 +574,10 @@ myKeys = \conf -> mkKeymap conf $
                 , ("M-<End>",          spawn "mpc stop")
 
                 -- Decrease the volume.
-                , ("M-<Down>", spawn ("amixer set \""++ userAmixerControl ++"\" 5%-"))
+                -- , ("M-<Down>", spawn ("amixer set \""++ userAmixerControl ++"\" 5%-"))
                 
                 -- Increase the volume.
-                , ("M-<Up>", spawn ("amixer set \""++ userAmixerControl ++"\" 5%+"))
+                -- , ("M-<Up>", spawn ("amixer set \""++ userAmixerControl ++"\" 5%+"))
 
                 -- ## Workspaces
                 
@@ -580,9 +589,11 @@ myKeys = \conf -> mkKeymap conf $
 
                 -- Go to the next workspace.
                 , ("M-<Left>",     prevNonEmptyWS )
+                , ("M-<Up>",       prevNonEmptyWS )
 
                 -- Go to the previous workspace.
-                , ("M-<Right>",    nextNonEmptyWS )
+                , ("M-<Right>",     nextNonEmptyWS )
+                , ("M-<Down>",      nextNonEmptyWS )
                 ]
 
                 -- ## Workspaces By Number
@@ -630,7 +641,7 @@ main = do
       , focusedBorderColor = themeActiveBorderColor
       , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
       , layoutHook = myLayoutHook
-      , startupHook = setWMName "XMONAD"
+      , startupHook = setWMName "LG3D"
       , logHook = dynamicLogWithPP $ myDzenPP myStatusBarPipe
       , modMask = userModMask                      -- the modifier key
       , keys = myKeys                              -- keybindings

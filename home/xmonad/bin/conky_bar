@@ -11,7 +11,7 @@ background yes
 
 # The `double_buffer` variable asks conky to use the Xdbe extension to reduce
 # flicker. This probably isn't required anymore.
-double_buffer yes
+# double_buffer yes
 
 # `out_to_console` simply tells conky to print to stdout, which is necessary here
 # because we are piping the output to dzen.
@@ -28,7 +28,7 @@ own_window yes
 own_window_type desktop
 
 # `update_interval` is how frequently in seconds conky should re-output the content.
-update_interval 1
+update_interval 2
 
 # `font` is self-explanatory. One can use xfontsel to pick a font.
 font -*-clean-*-*-*-*-12-*-*-*-*-*-iso8859-*
@@ -52,25 +52,25 @@ alignment mr
 # discharging icon.
 TEXT
 $alignr
-${if_up enp5s0}\
-^fg(green)^i($HOME/.xmonad/icons/net_up_02.xbm) \
-^fg(white)${upspeed enp5s0} \
-^fg(green)^i($HOME/.xmonad/icons/net_down_02.xbm) \
-^fg(white)${downspeed enp5s0} | \
-^fg(white)Wired | \
+${if_up enp0s25}\
+^fg(green)[u] \
+^fg(white)${upspeed enp0s25} \
+^fg(green)[d] \
+^fg(white)${downspeed enp0s25}  ·  \
+^fg(white)Wired  ·  \
 $endif\
 ${if_up wlan0}
 ^fg(green)^i($HOME/.xmonad/icons/net_up_02.xbm) \
 ^fg(white)${upspeed wlan0} \
 ^fg(green)^i($HOME/.xmonad/icons/net_down_02.xbm) \
-^fg(white)${downspeed wlan0} | \
+^fg(white)${downspeed wlan0}  ·  \
 ^fg(green)^i($HOME/.xmonad/icons/net-wifi.xbm) \
 ^fg(white)${wireless_essid wlan0} at \
 ^fg(white)${wireless_link_qual_perc wlan0}% | \
 $endif\
-^fg(green)^i($HOME/.xmonad/icons/cpu.xbm) \
-^fg(white)${loadavg 1} | \
-^fg(green)^i($HOME/.xmonad/icons/mem.xbm) \
+^fg(green)[cpu] \
+^fg(white)${loadavg 1}  ·  \
+^fg(green)[mem] \
 ^fg(white)$memperc%\
 ${if_match "${exec acpi}" != ""} | \
 ^fg(white)${if_match "${exec acpi | awk '{print $3}' | sed 's/,//'}" == "Discharging"}\
@@ -83,5 +83,5 @@ $else\
 ^fg(white)${battery_percent BAT0}% \
 $endif\
 $endif\
-^fg(white) | \
-^fg(skyblue)^i($HOME/.xmonad/icons/clock.xbm) ${time %d %B %H:%M} 
+^fg(white)  ·  \
+^fg(skyblue)${time %d %B %H:%M} 
