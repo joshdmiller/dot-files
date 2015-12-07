@@ -162,7 +162,7 @@ alias hist='history | grep'
 # or source my bashrc. The latter is more convenient, so here's a quick alias
 # to reload my configuration.
 alias bashload="source $HOME/.bashrc"
-alias zshload="source $HOME/.zhrc"
+alias zshload="source $HOME/.zshrc"
 
 # ## Package Management
 
@@ -253,18 +253,14 @@ if [ -f /usr/bin/bzr ]; then
   alias bl="bzr log -n0"
 fi
 
-# ## Task Warrior
-
-# I use [Task Warror][taskwarrior] to manage my 'to do' list so some
-# convenience functions are helpful. Task Warrior is a command-line application
-# for managing a plain-text to do list file with priorities, tags, projects,
-# due dates, and lots of fun features.
+# ## Virsh
 #
-# [taskwarrior]: http://www.taskwarrior.org
-  if [ -f /usr/bin/task ]; then
-  alias ta='task add'
-  alias tl='task long'
-  alias ts='task'
+# When using libvirt. it gets annoying specifying protocols and such every time.
+if [ -f /usr/bin/virsh ]; then
+  VIRSH="virsh --connect qemu:///system"
+  alias virsh="$VIRSH"
+  alias vs="$VIRSH start"
+  alias vd="$VIRSH destroy"
+  alias vc="$VIRSH create"
 fi
-
 
