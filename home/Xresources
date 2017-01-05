@@ -32,7 +32,8 @@ URxvt.perl-lib          : /home/joshua/Development/repos/dot-files/home/urxvt/pe
 ! `right`.
 URxvt.background        : black
 URxvt.foreground        : white
-URxvt.font              : xft:Source Code Pro:pixelsize=16,style=Regular
+URxvt.font              : xft:Source Code Pro SemiBold:pixelsize=20,xft:PowerlineSymbols
+URxvt.letterSpace       : 1
 URxvt.scrollBar         : off
 
 ! URxvt by default does not support using the control+arrows to advance or
