@@ -51,7 +51,7 @@ alias cp="cp -ir"
 # of all files and directories recursively. I added additional filters,
 # including ignoring any Git or Bazaar configuration directories, and swap
 # files. 
-alias tree="find . -not -wholename '*/.git/*' -not -wholename '*/.bzr/*' -not -name '.bzr' -not -name '.git' -not -name '*.sw?' -not -name '*~' -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g'"
+alias tree="find . -not -wholename '*/.git/*' -not -wholename '*/.bzr/*' -not -name '.bzr' -not -name '.git' -not -name '*.sw?' -not -name '*~' -not -wholename '*/node_modules/*' -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g'"
 
 # I frequently copy the output of command-line applications for use in
 # graphical applications. I have two aliases here into which I can pipe output
@@ -206,14 +206,24 @@ if [ -f /usr/bin/pacman ]; then
 fi
 
 # On [Redhat][redhat]-based systems like [Fedora][fedora], the package
-# management tool is Yum, built on top of RPM.
+# management tool is DNF, built on top of RPM.
 #
 # [fedora]: http://fedora-project.org
-if [ -f /usr/bin/yum ]; then
-    alias yi="sudo yum install"
-    alias yf="sudo yum search"
-    alias yr="sudo yum remove"
-    alias yu="sudo yum update"
+if [ -f /usr/bin/dnf ]; then
+    alias pi="sudo dnf install"
+    alias pf="sudo dnf search"
+    alias pr="sudo dnf remove"
+    alias pu="sudo dnf update"
+fi
+
+# On [Debian][debian]-based systems the package management tool is Aptitude.
+#
+# [debian]: http://debian.org
+if [ -f /usr/bin/aptitude ]; then
+    alias pi="sudo aptitude install"
+    alias pf="sudo aptitude search"
+    alias pr="sudo aptitude purge"
+    alias pu="sudo aptitude full-upgrade"
 fi
 
 # ## Netctl
