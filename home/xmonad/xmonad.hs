@@ -171,7 +171,7 @@ isVisible = do
 -- This is an Xorg font string. You can pick one using the graphical xfontsel
 -- tool. Make sure the font is installed or there will be errors and your
 -- XMonad will not look right.
-userFont = "-*-dejavu sans-*-*-*-*-20-*-*-*-*-*-*-*"
+userFont = "-*-source code pro semibold-*-*-*-*-20-*-*-*-*-*-*-*"
 
 -- This is the height used for all the dzen bars and the Prompt.
 userBarHeight = "30"
