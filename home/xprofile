@@ -2,7 +2,10 @@
 
 xset +fp /usr/share/fonts/local
 xset +fp /usr/share/fonts/OTF
+xset +fp $HOME/.fonts
 xset fp rehash
 xrdb ~/.Xresources
-xset -dpms
+xset -dpms s off
+
+xhost +
 
