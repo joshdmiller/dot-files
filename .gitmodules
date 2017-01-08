@@ -1,3 +1,3 @@
-[submodule "home/zsh"]
-	path = home/zsh
-	url = git://github.com/joshdmiller/oh-my-zsh.git
+[submodule "home/zplug"]
+	path = home/zplug
+	url = https://github.com/zplug/zplug.git

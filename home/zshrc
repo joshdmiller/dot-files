@@ -1,50 +1,56 @@
-# Lines configured by zsh-newuser-install
+source ~/.profile
+
+# Variables
+SAVEHIST=10000
+HISTFILE=$HOME/.zsh_history
+BASH=$HOME/.bash
+
 setopt autocd beep extendedglob nomatch
+
+# History
 setopt appendhistory
+setopt share_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
+setopt inc_append_history
+
 unsetopt notify
 bindkey -v
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/joshua/.zshrc'
 
+zstyle ':completion:*' menu select
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.zsh
-BASH=$HOME/.bash
-ZSH_THEME="steeef"
-
-alias zshconfig="vim ~/.zshrc"
 alias zshload="source ~/.zshrc"
+source $HOME/.zplug/init.zsh
 
-CASE_SENSITIVE="true"
-COMPLETION_WAITING_DOTS="true"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "plugins/git",   from:oh-my-zsh
+zplug "plugins/git-extras",   from:oh-my-zsh
+zplug "plugins/git-remote-branch",   from:oh-my-zsh
+zplug "plugins/gitfast",   from:oh-my-zsh
+zplug "plugins/npm",   from:oh-my-zsh
+zplug "plugins/systemd",   from:oh-my-zsh
+zplug "plugins/vi-mode",   from:oh-my-zsh
+zplug "plugins/tmux",   from:oh-my-zsh
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(
-  git 
-  git-extras 
-  git-remote-branch 
-  gitfast
-  history-substring-search
-  npm
-  systemd
-  vi-mode
-  bower
-  coffee
-  aws
-  dircycle
-  last-working-dir
-  tmux
-  urltools
-  wd
-)
+# Load theme file
+# zplug 'dracula/zsh', as:theme, use:dracula.zsh-theme
+PHI="%(?,%{$fg_bold[green]%}φ,%{$fg_bold[red]%}φ)"
+zplug 'LasaleFamine/phi-zsh-theme', as:theme, use:"*.zsh-theme"
 
-source $ZSH/oh-my-zsh.sh
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load #--verbose
 
 source $BASH/alias
 
@@ -89,4 +95,6 @@ fi
 if [[ -f $BASH/custom.sh ]]; then
   source $BASH/custom.sh
 fi
+
+clear
 
