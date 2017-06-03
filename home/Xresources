@@ -32,7 +32,7 @@ URxvt.perl-lib          : /home/joshua/Development/repos/dot-files/home/urxvt/pe
 ! `right`.
 URxvt.background        : black
 URxvt.foreground        : white
-URxvt.font              : xft:Source Code Pro SemiBold:pixelsize=20,xft:PowerlineSymbols
+URxvt.font              : xft:Source Code Pro SemiBold:pixelsize=28,xft:PowerlineSymbols
 URxvt.letterSpace       : 1
 URxvt.scrollBar         : off
 
