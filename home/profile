@@ -26,8 +26,3 @@ if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
   logout
 fi
 
-if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty2 ]]; then
-  exec xinit -- :1 vt$XDG_VTNR
-  logout
-fi
-

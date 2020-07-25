@@ -4,8 +4,10 @@ source ~/.profile
 SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
 BASH=$HOME/.bash
+export EDITOR=gvim
 
 setopt autocd beep extendedglob nomatch
+setopt autopushd pushdminus pushdsilent pushdtohome
 
 # History
 setopt appendhistory
@@ -20,37 +22,19 @@ unsetopt notify
 bindkey -v
 
 zstyle ':completion:*' menu select
+zstyle ':completion::complete:*' gain-privileges 1
 autoload -Uz compinit
 compinit
 
 alias zshload="source ~/.zshrc"
-source $HOME/.zplug/init.zsh
 
-zplug "zsh-users/zsh-history-substring-search"
-zplug "plugins/git",   from:oh-my-zsh
-zplug "plugins/git-extras",   from:oh-my-zsh
-zplug "plugins/git-remote-branch",   from:oh-my-zsh
-zplug "plugins/gitfast",   from:oh-my-zsh
-zplug "plugins/npm",   from:oh-my-zsh
-zplug "plugins/systemd",   from:oh-my-zsh
-zplug "plugins/vi-mode",   from:oh-my-zsh
-zplug "plugins/tmux",   from:oh-my-zsh
+source <(antibody init)
 
-# Load theme file
-# zplug 'dracula/zsh', as:theme, use:dracula.zsh-theme
-PHI="%(?,%{$fg_bold[green]%}φ,%{$fg_bold[red]%}φ)"
-zplug 'LasaleFamine/phi-zsh-theme', as:theme, use:"*.zsh-theme"
+antibody bundle < ~/.zsh/plugins
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  fi
-fi
-
-# Then, source plugins and add commands to $PATH
-zplug load #--verbose
+zstyle :prompt:pure:git:stash show yes
+autoload -U promptinit; promptinit
+prompt pure
 
 source $BASH/alias
 
@@ -90,11 +74,20 @@ if [[ -n ${terminfo[smkx]} ]] && [[ -n ${terminfo[rmkx]} ]]; then
   zle -N zle-line-finish  
 fi
 
+test -r "~/.dir_colors" && eval $(dircolors ~/.dir_colors)
+
+source /usr/share/doc/pkgfile/command-not-found.zsh
+
+source /usr/share/nvm/init-nvm.sh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 # Sometimes I have commands or properties that I want on only a single machine. The following checks
 # for such a sourceable script and loads it.
 if [[ -f $BASH/custom.sh ]]; then
   source $BASH/custom.sh
 fi
 
-clear
+# clear
 

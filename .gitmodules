@@ -1,3 +1,9 @@
-[submodule "home/zplug"]
-	path = home/zplug
-	url = https://github.com/zplug/zplug.git
+[submodule "home/tmux/plugins/tpm"]
+	path = home/tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
+[submodule "dircolors"]
+	path = dircolors
+	url = https://github.com/arcticicestudio/nord-dircolors
+[submodule "home/tpm"]
+	path = home/tpm
+	url = https://github.com/tmux-plugins/tpm

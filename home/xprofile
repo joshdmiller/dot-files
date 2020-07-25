@@ -1,11 +1,9 @@
 #!/bin/bash
 
-xset +fp /usr/share/fonts/local
+xset +fp /usr/share/fonts/TTF
 xset +fp /usr/share/fonts/OTF
-xset +fp $HOME/.fonts
+# xset +fp $HOME/.local/share/fonts
 xset fp rehash
 xrdb ~/.Xresources
 xset -dpms s off
-
-xhost +
 

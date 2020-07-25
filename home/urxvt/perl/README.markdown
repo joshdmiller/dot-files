@@ -1,3 +1,0 @@
-# Perl Modules for URxvt
-
-
