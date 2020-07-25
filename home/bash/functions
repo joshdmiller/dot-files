@@ -11,38 +11,38 @@
 # This function starts a daemon in the rc.d style. This could also have been
 # defined using the rc.d command-line application, but this is more direct.
 function start() {
-        for arg in $@
-        do
-                sudo /etc/rc.d/$arg start
-        done
+  for arg in $@
+  do
+    sudo /etc/rc.d/$arg start
+  done
 }
 
 # This function stops a daemon in the rc.d style. This could also have been
 # defined using the rc.d command-line application, but this is more direct.
 function stop() {
-        for arg in $@
-        do
-                sudo /etc/rc.d/$arg stop
-        done
+  for arg in $@
+  do
+    sudo /etc/rc.d/$arg stop
+  done
 }
 
 # This function restarts a daemon in the rc.d style. This could also have been
 # defined using the rc.d command-line application, but this is more direct.
 function restart() {
-        for arg in $@
-        do
-                sudo /etc/rc.d/$arg restart
-        done
+  for arg in $@
+  do
+    sudo /etc/rc.d/$arg restart
+  done
 }
 
 # This function reports on the status a daemon in the rc.d style. This could
 # also have been defined using the rc.d command-line application, but this is
 # more direct.
 function status() {
-        for     arg in $@
-        do
-                sudo /etc/rc.d/$arg status
-        done
+  for     arg in $@
+  do
+    sudo /etc/rc.d/$arg status
+  done
 }
 
 # ## Miscellaenous
@@ -50,12 +50,12 @@ function status() {
 # This method change the terminal title. This should be compatible with most
 # emulators.
 function chtitle() {
-        echo -ne "\033]0;${1:-$TERM}\007";
+  echo -ne "\033]0;${1:-$TERM}\007";
 }
 
 # This function makes directory then changes directory into it. Very handy for
 # the lazy.
-function cdnew() {
-            mkdir -vp "$1" && cd "$_";
+function take() {
+  mkdir -vp "$1" && cd "$_";
 }
 
