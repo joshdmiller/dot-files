@@ -3,7 +3,7 @@ source ~/.profile
 # Variables
 SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
-BASH=$HOME/.bash
+SHELLDIR=$HOME/.shell
 export EDITOR=gvim
 
 setopt autocd beep extendedglob nomatch
@@ -36,7 +36,8 @@ zstyle :prompt:pure:git:stash show yes
 autoload -U promptinit; promptinit
 prompt pure
 
-source $BASH/alias
+source $SHELLDIR/alias
+source $SHELLDIR/functions
 
 typeset -A key
 
@@ -85,8 +86,8 @@ export NVM_DIR="$HOME/.nvm"
 
 # Sometimes I have commands or properties that I want on only a single machine. The following checks
 # for such a sourceable script and loads it.
-if [[ -f $BASH/custom.sh ]]; then
-  source $BASH/custom.sh
+if [[ -f $SHELLDIR/custom.sh ]]; then
+  source $SHELLDIR/custom.sh
 fi
 
 # clear

@@ -117,13 +117,13 @@ export revers="$(tput rev)"    # reverse
 # functions to be used by the user from the command line.
 #
 # [bash_funcs]: #home/bash/functions
-source "$HOME"/.bash/functions
+source "$HOME"/.shell/functions
 
 # The [bash aliases script][bash_alias] defines a set of aliases for common
 # commands, including Pacman and Git.
 #
 # [bash_alias]: #home/bash/alias
-source "$HOME"/.bash/alias
+source "$HOME"/.shell/alias
 
 # The [bash completion script][bash_completion] defines a set of additional
 # Bash completion operations for commands not supported out of the box with the
