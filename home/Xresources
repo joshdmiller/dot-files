@@ -3,6 +3,6 @@
 
 dzen2.font              : xft:Source Code Pro:pixelsize=14,style=Regular
 
-#include ".urxvt/defaults"
-#include ".urxvt/nord-theme"
+#include "/home/joshua/.urxvt/defaults"
+#include "/home/joshua/.urxvt/nord-theme"
 

@@ -18,6 +18,9 @@ URxvt.font              : xft:Source Code Pro SemiBold:pixelsize=20,xft:Powerlin
 URxvt.letterSpace       : 1
 URxvt.scrollBar         : off
 
+Xcursor.theme           : Qogir
+Xcursor.size            : 16
+
 ! URxvt by default does not support using the control+arrows to advance or
 ! retreat one word at a time. The following two codes re-enable this.
 URxvt.keysym.C-Right    : \033[1;5C
@@ -65,15 +68,13 @@ URxvt.pasteCommand      : xsel -obp
 ! the function to execute. My keybindings all point to perl extensions, so the
 ! format is `perl:<module>:function`.
 
-! As the C+S+v and C+S+c are already used by URxvt for internal functions, I
-! mapped copy and paste to Alt+c and Alt+v.
-URxvt.keysym.M-c        : perl:clipboard:copy
-URxvt.keysym.M-v        : perl:clipboard:paste
-URxvt.keysym.M-C-v      : perl:clipboard:paste_escaped
+! I map copy and paste to C+S+c and C+S+v.
+URxvt.keysym.Shift-Control-C  : eval:selection_to_clipboard
+URxvt.keysym.Shift-Control-V  : eval:paste_clipboard
+URxvt.iso14755                : false
+URxvt.iso14755_52             : false
 
 ! The keybinding to activate the default `url-select` plugin is Alt+u, so I map
 ! the same keybinding to the replacement.
 URxvt.keysym.M-u        : perl:url-select:select_next
-
-URxvt.iso14755_52       : False
 
