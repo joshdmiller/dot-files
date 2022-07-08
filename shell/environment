@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SHELLDIR=$HOME/.shell
+
+source $SHELLDIR/path_to_dotfiles
+
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git --exclude node_modules' fzf
+

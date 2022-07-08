@@ -1,0 +1,278 @@
+#!/bin/bash
+# The **.bash/alias** script contains a large number of aliases for commands I
+# run frequently. Why type more than I have to? 
+#
+# For those unaware, an alias is a shortcut for another command. For example,
+# the I set up the alias `ls` to execute `ls -hF --color=always`. Now if I type
+# `ls` at the command line, this command is executed instead. I can still pass
+# any parameters I want, so `ls -ls` translates to `ls -hF --color=always -ls`.
+#
+# This script has been tested on [Arch Linux][arch] with Bash 4.2.24.
+#
+# [arch]: http://www.archlinux.org
+
+# ## Colorize Output
+# I like pretty output as much as the next guy. These aliases just add
+# colorized output by default to the commands that support it.
+
+# The -h flag ensures human-readable sizes when output (e.g. 1024K instead of
+# 1048576). The -F option (also --classify) appends an entry-type indicator to
+# each file. Directories are appended with a forward slash, executable files
+# with an asterisk, soft links with an ampersat, etc. This makes the output
+# more valuable, but might need to be removed in scripts that process the
+# output of ls.
+# alias ls='ls -hF --color=always'
+alias ls='exa -hF'
+
+# The -I command skips binary files as I almost never need to search inside of
+# one.
+alias grep="grep --color=auto -I"
+alias egrep="egrep --color=auto -I"
+
+# I prefer [colordiff][colordiff] to the standard diff, so I alias that here.
+# The -N flag treats absent files as empty rather than throwing an error. The
+# -a flag treats all files as text files as I rarely have to compare binary
+# files through means other than a checksum. The -u flag outputs three lines of
+# context, which is the default. Lasty, the -r flag forces the comparison to
+# operate recursively.
+#
+# [colordiff]: http://colordiff.sourceforge.net
+alias diff='colordiff -Naur'              # requires colordiff package
+
+# ## System Tools
+
+# I like less rather than more.
+alias more='less'
+
+# By default, I like to copy recursively (-r) and be prompted to replace files
+# rather than it doing it automatically (-i).
+alias cp="cp -ir"
+
+# This is a revisited version of the tree command, which outputs a pretty tree
+# of all files and directories recursively. I added additional filters,
+# including ignoring any Git or Bazaar configuration directories, and swap
+# files. 
+alias tree="find . -not -wholename '*/.git/*' -not -wholename '*/.bzr/*' -not -name '.bzr' -not -name '.git' -not -name '*.sw?' -not -name '*~' -not -wholename '*/node_modules/*' -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g'"
+
+# I frequently copy the output of command-line applications for use in
+# graphical applications. I have two aliases here into which I can pipe output
+# and have it stored in the standard clipboard buffer. The first copies the
+# output removing all newline characters whereas the second preserves them.
+alias copy="tr -d '\n' | xsel -ib"
+alias copyml="xsel -ib"
+
+# When these aliases are loaded into an unprivileged account, we add some
+# sudo-based aliases.
+if [ $UID -ne 0 ]; then
+    alias s='sudo '
+
+    # These are for outputting the contents of text files for which the user
+    # has no permission.
+    alias scat='sudo cat'
+    alias stail='sudo tail'
+
+    # This is a shortcut to a root shell.
+    alias root='sudo su'
+    
+    # These control shutdown and reboot
+    alias reboot='sudo reboot'
+    alias halt='sudo halt'
+    
+    # I frequently change configuration files, so an alias to save me one keystroke
+    # (from `s vim`).
+    alias svim='sudo vim'
+fi
+
+# As Vim is my favorite editor, I spend much time in it (also in GVim) so I
+# alias that too.
+alias v='vim'
+alias gv='gvim'
+
+# The df command prints out the amount of free space on one's media. The -h
+# flag simply forces the output into human-readable numbers (e.g. like 1024K
+# instead of 1048576). 
+alias df='df -h'
+
+# The free command reports system memory usage in a
+# similar fashion. The -h flag makes it output sizes in a human-readable format.
+alias free='free -h'
+
+# The du command reports on the disk usage of specified files or directories. I
+# don't usually care about the file-by-file report, so I only print the summary
+# (-s) and, again, I want it in human-readable format (-h).
+alias du='du -s -h'
+
+# The pg alias is a shortcut for looking for process names or PIDs based on a
+# pattern. It just greps the output of the ps command. The -A flag shows all
+# processes and the -f flag shows more information about each process in a nice
+# columnar format. Example:
+#
+#     $ pg urxvt
+#     joshua    1066 29450  0 Mar23 pts/1    00:00:07 urxvtd
+#     joshua   25850 18790  0 12:06 pts/4    00:00:00 grep --color=auto -I urx
+alias pg='ps -Af | grep $1'         # requires an argument
+
+# This alias is a convenient way to get process information (specifically
+# resource usage) for a named command. It simply executes `top` in script mode
+# (-b) for a single sample (-n1) and greps the output for the provided pattern.
+# Example:
+#
+#     $ t urxvt
+#     1066 joshua    20   0  104m  20m 4768 S    0  0.5   0:07.39 urxvtd
+#
+alias t='top -bn1 | grep'
+
+# ## Networking
+
+# Typically, I only want five pings as a sample, so I alias that here to save me the ^C.
+alias ping='ping -c 5'
+
+# The openports alias uses netstat to report on all ports on which a program is
+# operating. The output must be interpreted to determine which are incoming and
+# which are outgoing.
+alias openports='netstat --all --numeric --programs --inet'
+
+# [ifconfig.me][ifconfigme] is a website that just prints the requesting IP address. This
+# just curls that domain to shows one's WAN IP. The site has many more options.
+#
+# [ifconfigme]: http://www.ifconfig.me
+alias myip="curl ifconfig.me"
+
+# ## Directory Convenience
+
+# It's only three keystrokes, but it all adds up!
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# I always want to create directories recursively if a parent folder does not
+# exist.
+alias mkdir='mkdir -p'
+
+# I frequently change the current directory to my repositories folder, so I set
+# a one-character alias to do so.
+alias r='cd /store/dev/repos'
+
+# ## Shell Helpers
+
+# I often search my history, so I created an alias to grep it.
+alias hist='history | grep'
+
+# When I make changes to my bash or zsh configuration, I either need to log-in again
+# or source my bashrc. The latter is more convenient, so here's a quick alias
+# to reload my configuration.
+alias bashload="source $HOME/.bashrc"
+alias zshload="source $HOME/.zshrc"
+
+# ## Package Management
+
+# I switch between distributions frequently, so it is helpful to have aliases
+# that do not conflict (for example yi meaning either yaourt or yum). This
+# section enables aliases based on the existence of the binary.
+# In [Arch Linux][arch], Pacman is the package manager.
+if [ -f /usr/bin/pacman ]; then
+    JOSH_PM_CMD="sudo pacman"
+
+    alias pi="$JOSH_PM_CMD -S --needed $@"    # install specified package if its not installed
+    alias pd="$JOSH_PM_CMD -Sy $@"            # refresh repositories
+    alias pu="$JOSH_PM_CMD -Syu $@"           # update system
+    alias pf="$JOSH_PM_CMD -Ss $@"            # search the repos
+    alias pl="$JOSH_PM_CMD -U $@"             # install a local pkg.txz file
+    alias pq="$JOSH_PM_CMD -Qs $@"            # search installed packages
+    alias pr="$JOSH_PM_CMD -Rdns $@"          # uninstall +deps +configs
+
+    # For accessing the [Arch User Repository][aur] (i.e. unsupported packages and
+    # ports), I like Yaourt, which wraps Pacman with additional functionality for
+    # the AUR. Just shortcuts here too.
+    #
+    # [aur]: http://aur.archlinux.org
+    if [ -f /usr/bin/yaourt ]; then
+        alias yi='yaourt -S --needed'               # install and/or build specified package if its not installed
+        alias yf='yaourt -Ss'                       # search the Pacman repos and the AUR
+        alias yg='yaourt -Gs'                       # download a build script from the AUR
+    fi
+
+    # But I also like [Aura](https://wiki.archlinux.org/index.php/Aura).
+    if [ -f /usr/bin/aura ]; then
+      alias as='aura -As'                   # search the AUR using a regex
+      alias ai='sudo aura -Axa --hotedit'   # build and install an AUR package 
+      alias au='sudo aura -Akua'            # update all installed packages and remove build deps
+      alias ad='aura -Ad'                   # display a packages dependencies recursively
+      alias alp='aura -Li'                  # display log for a package
+      alias als='aura -Ls'                  # search the log for the regex
+      alias al='aura -L'                    # tail the log
+      alias ao='aura -O'                    # display orphan packages
+    fi
+fi
+
+# On [Redhat][redhat]-based systems like [Fedora][fedora], the package
+# management tool is DNF, built on top of RPM.
+#
+# [fedora]: http://fedora-project.org
+if [ -f /usr/bin/dnf ]; then
+    alias pi="sudo dnf install"
+    alias pf="sudo dnf search"
+    alias pr="sudo dnf remove"
+    alias pu="sudo dnf update"
+fi
+
+# On [Debian][debian]-based systems the package management tool is Aptitude.
+#
+# [debian]: http://debian.org
+if [ -f /usr/bin/aptitude ]; then
+    alias pi="sudo aptitude install"
+    alias pf="sudo aptitude search"
+    alias pr="sudo aptitude purge"
+    alias pu="sudo aptitude full-upgrade"
+fi
+
+# ## Netctl
+# On Arch Linux, I use Netctl, but running the up and down commands is a pain in the butt.
+if [ -f /usr/bin/netctl ]; then
+  alias nu='sudo netctl start'
+  alias nd='sudo netctl stop'
+  alias ns='sudo netctl switch-to'
+fi
+
+# ## Git
+
+# Git is my favorite version control system and I am in it literally every day.
+# I use it for document versioning, local wikis, and of course source code.
+# There is nothing fancy here; these are just to save keystrokes.
+if [ -f /usr/bin/git ]; then
+  alias gco='git checkout'
+  alias gcb='git checkout -b'
+  alias gc='git commit'
+  alias g+='git add'
+  alias gpush='git push'
+  alias gpull='git pull'
+  alias gs='git status'
+  alias gb='git branch'
+  alias gl='git log'
+  alias gdiff='git diff'
+fi
+
+# ## Bazaar
+#
+# I also have occasion to use Bazaar, so I try and save keystrokes here too.
+if [ -f /usr/bin/bzr ]; then
+  alias bb="bzr branch"
+  alias bc="bzr commit"
+  alias ba="bzr add"
+  alias bm="bzr merge"
+  alias bdiff="bzr diff"
+  alias bl="bzr log -n0"
+fi
+
+# ## Virsh
+#
+# When using libvirt. it gets annoying specifying protocols and such every time.
+if [ -f /usr/bin/virsh ]; then
+  VIRSH="virsh --connect qemu:///system"
+  alias virsh="$VIRSH"
+  alias vs="$VIRSH start"
+  alias vd="$VIRSH destroy"
+  alias vc="$VIRSH create"
+fi
+
