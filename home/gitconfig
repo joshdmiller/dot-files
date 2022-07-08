@@ -1,8 +1,10 @@
 [user]
-	email = josh@joshdmiller.com
+	email = jdm@rightbox.co
 	name = Josh David Miller
 [push]
 	default = simple
 [core]
 	editor = gvim -f
 	excludesfile = /home/joshua/.gitignore_global
+[init]
+	defaultBranch = main
