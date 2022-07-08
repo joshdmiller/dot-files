@@ -32,12 +32,14 @@ source <(antibody init)
 
 antibody bundle < ~/.zsh/plugins
 
+PURE_PROMPT_SYMBOL=">"
 zstyle :prompt:pure:git:stash show yes
 autoload -U promptinit; promptinit
 prompt pure
 
 source $SHELLDIR/alias
 source $SHELLDIR/functions
+source $SHELLDIR/environment
 
 typeset -A key
 
@@ -77,18 +79,16 @@ fi
 
 test -r "~/.dir_colors" && eval $(dircolors ~/.dir_colors)
 
-source /usr/share/doc/pkgfile/command-not-found.zsh
+[ -s "/usr/share/doc/pkgfile/command-not-found.zsh" ] && source /usr/share/doc/pkgfile/command-not-found.zsh
+[ -s "/usr/share/nvm/init-nvm.sh" ] && source /usr/share/nvm/init-nvm.sh
+[ -s "/home/joshua/.config/broot/launcher/bash/br" ] && source /home/joshua/.config/broot/launcher/bash/br
 
-source /usr/share/nvm/init-nvm.sh
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Sometimes I have commands or properties that I want on only a single machine. The following checks
 # for such a sourceable script and loads it.
 if [[ -f $SHELLDIR/custom.sh ]]; then
   source $SHELLDIR/custom.sh
 fi
-
-# clear
 
